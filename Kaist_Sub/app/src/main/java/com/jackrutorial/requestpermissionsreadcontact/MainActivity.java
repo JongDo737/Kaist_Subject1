@@ -115,7 +115,7 @@ public class MainActivity extends AppCompatActivity {
     @SuppressLint("Range")
     private void getContacts() {
         //TODO get contacts code here
-        Toast.makeText(this, "Get contacts ....", Toast.LENGTH_LONG).show();
+        //Toast.makeText(this, "Get contacts ....", Toast.LENGTH_LONG).show();
         ContentResolver cr = getContentResolver();
         System.out.println(ContactsContract.Contacts.CONTENT_URI);
         Cursor cur = cr.query(ContactsContract.Contacts.CONTENT_URI , null ,null, null, null);
