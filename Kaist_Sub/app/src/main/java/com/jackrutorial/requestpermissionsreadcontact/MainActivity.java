@@ -39,6 +39,8 @@ public class MainActivity extends AppCompatActivity {
     CustomAdapter adapter = new CustomAdapter(this);
 
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
