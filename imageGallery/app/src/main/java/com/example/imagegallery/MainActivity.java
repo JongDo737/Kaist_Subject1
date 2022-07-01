@@ -81,8 +81,9 @@ public class MainActivity extends AppCompatActivity {
                 // Sending image id to FullScreenActivity
                 Intent i = new Intent(getApplicationContext(), FullImageActivity.class);
                 // passing array index
-                i.putExtra("id", position);
-                //i.put
+                i.putExtra("id", position);         // 몇번째 사진
+                i.putExtra("image", galleryList.get(position).getImg());
+                i.putExtra("imgTitle", galleryList.get(position).getImgTitle());
                 startActivity(i);
             }
         });
