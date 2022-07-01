@@ -26,11 +26,13 @@ import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
 
+    ArrayList<GalleryDto> galleryList = new ArrayList<>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        setTitle("종민이 갤러리 걸작 모음전");
         Bitmap image;
         image = BitmapFactory.decodeResource(getResources(), R.drawable.good);
         // ListView에 Adapter 설정
@@ -38,71 +40,77 @@ public class MainActivity extends AppCompatActivity {
         Button button;              // gallery Open Btn
 
         // Dto 생성
-        GalleryDto galleryDto = new GalleryDto();
+
 
         // 데이터 생성
-        ArrayList<GalleryDto> galleryList = new ArrayList<>();
+        CustomAdapter myAdapter = new CustomAdapter(this,0,galleryList);
 
-        for(int i=0; i<10; i++){
+        for(int i=0; i<5; i++){
+            GalleryDto galleryDto = new GalleryDto();
+            int randNum = rnd.nextInt(10000);
             galleryDto.setImg(image);
-            galleryDto.setImgTitle("제목 : "+ rnd.nextInt(10000));
             galleryList.add(galleryDto);
+//            myAdapter.notifyDataSetChanged();
+
         }
         // 어답터 생성
-        CustomAdapter myAdapter = new CustomAdapter(this,0,galleryList);
 
         ListView list = (ListView) findViewById(R.id.listView);
         list.setAdapter(myAdapter);
 
 
 
-//        button = (Button)findViewById(R.id.button);
-//
-//        button.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Intent intent = new Intent();
-//                intent.setType("image/*");
-//                intent.setAction(Intent.ACTION_GET_CONTENT);
-//                startActivityForResult(intent, 1);
-//                System.out.println("여기요 여기 !");
-//            }
-//        });
-//
-//
-//
-//    }
-//
-//    @Override
-//    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-//        // Check which request we're responding to
-//        super.onActivityResult(requestCode, resultCode, data);
-//        System.out.println("여기요 여기 222222");
-//
-//        if (requestCode == 1) {
-//            // Make sure the request was successful
-//            if (resultCode == RESULT_OK) {
-//                try {
-//                    // 선택한 이미지에서 비트맵 생성
-//                    InputStream in = getContentResolver().openInputStream(data.getData());
-//                    Bitmap img = BitmapFactory.decodeStream(in);
-//                    in.close();
-//                    // 이미지 표시
-//                    System.out.println("AAAAAAAAAAAAAAAAAAAAAAAA");
-//                    System.out.println(img);
-//                    galleryDto.setImg(img);
-//                    galleryDto.setImgTitle("안녕하세요");
-//                    galleryList.add(galleryDto);
-//                    System.out.println("여기요 여기 333333");
-//                    for(int i=0; i<galleryList.size();i++){
-//                        System.out.println(galleryList.get(i).getImg());
-//                    }
-//                    //myAdapter.notifyDataSetChanged();
-//                } catch (Exception e) {
-//                    e.printStackTrace();
-//                }
-//            }
-//        }
+
+        button = (Button)findViewById(R.id.button);
+
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent();
+                intent.setType("image/*");
+                intent.setAction(Intent.ACTION_GET_CONTENT);
+                startActivityForResult(intent, 1);
+                System.out.println("여기요 여기 !");
+
+            }
+        });
+
+
+
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        // Check which request we're responding to
+        super.onActivityResult(requestCode, resultCode, data);
+        System.out.println("여기요 여기 222222");
+        GalleryDto galleryDto = new GalleryDto();
+        CustomAdapter myAdapter = new CustomAdapter(this,0,galleryList);
+        if (requestCode == 1) {
+            // Make sure the request was successful
+            if (resultCode == RESULT_OK) {
+                try {
+                    // 선택한 이미지에서 비트맵 생성
+                    InputStream in = getContentResolver().openInputStream(data.getData());
+                    Bitmap img = BitmapFactory.decodeStream(in);
+                    in.close();
+                    // 이미지 표시
+                    System.out.println("AAAAAAAAAAAAAAAAAAAAAAAA");
+                    System.out.println(img);
+                    galleryDto.setImg(img);
+                    galleryList.add(galleryDto);
+                    System.out.println("여기요 여기 333333");
+                    for(int i=0; i<galleryList.size();i++){
+                        System.out.println(galleryList.get(i).getImg());
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        System.out.println("여기요 여기 4444444444444444444444444");
+        myAdapter.notifyDataSetChanged();
+        System.out.println("여기요 여기 55555555555555555555555");
     }
 
     // 커스텀 어답터
@@ -117,7 +125,6 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
-
             // 특정 행(position)의 데이터를 구함
             GalleryDto item = (GalleryDto) getItem(position);
 
@@ -132,6 +139,22 @@ public class MainActivity extends AppCompatActivity {
 
             EditText imgTitle = (EditText)convertView.findViewById(R.id.imgTitle);
             imgTitle.setText(item.getImgTitle());
+
+            Button commit = (Button) convertView.findViewById(R.id.commit);
+            commit.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                    View parentRow = (View) view.getParent();
+                    ListView listView = (ListView) parentRow.getParent();
+                    String text = imgTitle.getText().toString();
+
+                    final int position = listView.getPositionForView(parentRow);
+                    galleryList.get(position).setImgTitle(text);
+
+
+                }
+            });
 
             return convertView;
         }
