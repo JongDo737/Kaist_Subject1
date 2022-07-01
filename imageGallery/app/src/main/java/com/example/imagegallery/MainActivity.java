@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.Button;
@@ -60,10 +61,9 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-
         button = (Button)findViewById(R.id.button);
 
-        button.setOnClickListener(new View.OnClickListener() {
+        button.setOnClickListener(new View.OnClickListener() {      // 갤러리 오픈 버튼 클릭
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent();
@@ -75,6 +75,17 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {         // 클릭시 확대 화면
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+                // Sending image id to FullScreenActivity
+                Intent i = new Intent(getApplicationContext(), FullImageActivity.class);
+                // passing array index
+                i.putExtra("id", position);
+                //i.put
+                startActivity(i);
+            }
+        });
 
 
     }
@@ -141,6 +152,8 @@ public class MainActivity extends AppCompatActivity {
             imgTitle.setText(item.getImgTitle());
 
             Button commit = (Button) convertView.findViewById(R.id.commit);
+
+
             commit.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
