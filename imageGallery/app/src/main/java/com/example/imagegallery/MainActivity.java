@@ -43,7 +43,6 @@ public class MainActivity extends AppCompatActivity {
         // Dto 생성
 
 
-        // 데이터 생성
         CustomAdapter myAdapter = new CustomAdapter(this,0,galleryList);
 
         for(int i=0; i<5; i++){
