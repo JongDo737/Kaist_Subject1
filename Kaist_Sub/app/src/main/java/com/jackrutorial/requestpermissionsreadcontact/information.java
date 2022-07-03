@@ -5,6 +5,7 @@ public class information {
     private String num="";
     private String key="";
     private String id = "";
+    private String email = "";
 
     public String getName(){
         return name;
@@ -18,6 +19,7 @@ public class information {
     public String getId(){
         return id;
     }
+    public String getEmail() {return email;}
 
     public void setName(String args){
         name = args;
@@ -31,4 +33,5 @@ public class information {
     public void setId(String args){
         id = args;
     }
+    public void setEmail(String args) {email = args;}
 }

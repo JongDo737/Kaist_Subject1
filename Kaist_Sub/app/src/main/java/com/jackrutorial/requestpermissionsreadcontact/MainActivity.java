@@ -60,6 +60,7 @@ public class MainActivity extends AppCompatActivity {
 
         final EditText name = findViewById(R.id.name);
         final EditText num = findViewById(R.id.num);
+        final EditText email = findViewById(R.id.email);
 
         Button btnAdd = findViewById(R.id.btnAdd);
         btnAdd.setOnClickListener(new View.OnClickListener() {
@@ -67,12 +68,14 @@ public class MainActivity extends AppCompatActivity {
                 information inf = new information();
                 inf.setName(name.getText().toString());
                 inf.setNum(num.getText().toString());
+                inf.setEmail(email.getText().toString());
                 information_list.add(inf);
                 adapter.notifyDataSetChanged();
                 Intent intent = new Intent(ContactsContract.Intents.Insert.ACTION);
                 intent.setType(ContactsContract.RawContacts.CONTENT_TYPE);
                 intent.putExtra(ContactsContract.Intents.Insert.NAME, inf.getName());
                 intent.putExtra(ContactsContract.Intents.Insert.PHONE, inf.getNum());
+                intent.putExtra(ContactsContract.Intents.Insert.EMAIL, inf.getEmail());
                 startActivity(intent);
             }
         });
@@ -84,6 +87,7 @@ public class MainActivity extends AppCompatActivity {
                 String name = information_list.get(position).getName();
                 String num = information_list.get(position).getNum();
                 ContentResolver cr = getContentResolver();
+                System.out.println("출력출력출력출력출력출력출력출력출력출력출력출력출력출력출력출력");
                 System.out.println(key);
                 System.out.println(ID);
                 System.out.println(name);
@@ -116,6 +120,7 @@ public class MainActivity extends AppCompatActivity {
     private void getContacts() {
         //TODO get contacts code here
         //Toast.makeText(this, "Get contacts ....", Toast.LENGTH_LONG).show();
+        information_list = new ArrayList<information>();
         ContentResolver cr = getContentResolver();
         System.out.println(ContactsContract.Contacts.CONTENT_URI);
         Cursor cur = cr.query(ContactsContract.Contacts.CONTENT_URI , null ,null, null, null);
@@ -138,6 +143,12 @@ public class MainActivity extends AppCompatActivity {
                 inf.setKey(key);
                 inf.setId(ID);
 
+                Cursor eCur = cr.query(ContactsContract.CommonDataKinds.Email.CONTENT_URI, null, ContactsContract.CommonDataKinds.Email.CONTACT_ID + "=?", new String[]{String.valueOf(id)}, null);
+                String email = new String();
+                while (eCur.moveToNext()){
+                    email += eCur.getString(eCur.getColumnIndex(ContactsContract.CommonDataKinds.Email.DATA));
+                }
+                inf.setEmail(email);
 
                 if(("1").equals(cur.getString(cur.getColumnIndex(ContactsContract.Contacts.HAS_PHONE_NUMBER)))) {
                     Cursor pCur = cr.query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI, null, ContactsContract.CommonDataKinds.Phone.CONTACT_ID + "=?", new String[]{String.valueOf(id)}, null);
@@ -242,12 +253,15 @@ public class MainActivity extends AppCompatActivity {
             View itemView = View.inflate(context, R.layout.item, null);
             TextView nameItem = itemView.findViewById(R.id.nameItem);
             TextView numItem = itemView.findViewById(R.id.numItem);
+            TextView emailItem = itemView.findViewById(R.id.emailItem);
 
             nameItem.setText(information_list.get(position).getName());
             numItem.setText(information_list.get(position).getNum());
-
+            emailItem.setText(information_list.get(position).getEmail());
             // nameItem.setText(nameList.get(position));
             // numItem.setText(numList.get(position));
+
+            /*
             ImageButton deleteBtn = itemView.findViewById(R.id.deleteBtn);
             deleteBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -260,6 +274,8 @@ public class MainActivity extends AppCompatActivity {
                     adapter.notifyDataSetChanged();
                 }
             });
+
+             */
             return itemView;
         }
     }

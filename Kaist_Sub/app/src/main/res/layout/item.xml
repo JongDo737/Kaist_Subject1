@@ -11,26 +11,33 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/numItem"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/nameItem"
-            android:layout_alignLeft="@+id/nameItem"
-            android:textSize="15dp" />
-
-        <TextView
             android:id="@+id/nameItem"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_below="@+id/numItem"
+            android:layout_alignLeft="@+id/numItem"
             android:textColor="#0000ff"
             android:textSize="20dp" />
-    </LinearLayout>
 
+        <TextView
+            android:id="@+id/numItem"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/emailItem"
+            android:layout_alignLeft="@+id/emailItem"
+            android:textSize="15dp" />
+        <TextView
+            android:id="@+id/emailItem"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="15dp" />
+    </LinearLayout>
+    <!--
     <ImageButton
         android:id="@+id/deleteBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:contentDescription="@string/appbar_scrolling_view_behavior"
         app:srcCompat="@drawable/trashcan" />
-
+    -->
 </LinearLayout>

@@ -26,6 +26,12 @@
         android:hint="전화번호"
         android:inputType="number" />
 
+    <EditText
+        android:id="@+id/email"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="이메일" />
+
     <Button
         android:id="@+id/btnAdd"
         android:layout_width="match_parent"
