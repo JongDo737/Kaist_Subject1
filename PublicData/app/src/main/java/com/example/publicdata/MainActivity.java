@@ -3,6 +3,12 @@ import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -32,8 +38,14 @@ public class MainActivity
     TextView nowCalorie;
     TextView wantCalorie;
 
+    EditText foodName;
+    Button btnAdd;
+    ListView listView;
+
     int[] colorArray = new int[] {Color.LTGRAY, Color.BLUE, Color.RED};
 
+    ArrayList<FoodDataDto> foodList = new ArrayList<FoodDataDto>();
+    ArrayList<String> foodNameList = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -42,15 +54,19 @@ public class MainActivity
 
         // 음식 데이터
         FoodData foodData = new FoodData();
-        ArrayList<FoodDataDto> foodList = new ArrayList<FoodDataDto>();
+
         try {
             foodList = foodData.getAPIData();        //음식 데이터 Array 선언
 
         } catch (Exception e) {
             System.out.println("공공데이터 API 함수 호출 오류");
         }
-
-
+        // 이름 리스트
+        for(int i=0; i<foodList.size(); i++){
+            foodNameList.add(foodList.get(i).getName());
+        }
+        foodNameList.add("aaa");
+        foodNameList.add("aaabbb");
         FoodDataDto morning = new FoodDataDto();
         // 햄버거 검색했을 때
         String morningSearch = "햄버거";
@@ -74,20 +90,56 @@ public class MainActivity
         todayTotalFood.setProtein(morning.getProtein()+lunch.getProtein()+dinner.getProtein());
         todayTotalFood.setFat(morning.getFat()+lunch.getFat()+dinner.getFat());
 
-
-        // 원형 그래프
-        pieChart = findViewById(R.id.pieChart);
-
-        PieDataSet pieDataSet = new PieDataSet(data1(todayTotalFood), "오늘 먹은 음식 : "+todayTotalFood.getName());
-        pieDataSet.setColors(colorArray);
-
-        PieData pieData = new PieData(pieDataSet);
-        pieChart.setData(pieData);
-        pieChart.invalidate();
+//
+//        // 원형 그래프
+//        pieChart = findViewById(R.id.pieChart);
+//
+//        PieDataSet pieDataSet = new PieDataSet(data1(todayTotalFood), "오늘 먹은 음식 : "+todayTotalFood.getName());
+//        pieDataSet.setColors(colorArray);
+//
+//        PieData pieData = new PieData(pieDataSet);
+//        pieChart.setData(pieData);
+//        pieChart.invalidate();
 
         // 칼로리 TextView
         nowCalorie = findViewById(R.id.nowCalorie);
         nowCalorie.setText("현재 :  "+todayTotalFood.getCalorie()+"Kcal");
+
+        //검색하기 구현
+        btnAdd = findViewById(R.id.btnAdd);
+        listView = findViewById(R.id.listView);
+
+        // 검색 창
+        final AutoCompleteTextView autoCompleteTextView = (AutoCompleteTextView) findViewById(R.id.autoCompleteTextView);
+
+        // AutoCompleteTextView 에 아답터를 연결한다.
+        autoCompleteTextView.setAdapter(new ArrayAdapter<String>(this,
+                android.R.layout.simple_dropdown_item_1line, foodNameList ));
+
+        // 확인 버튼을 눌렀을 때
+        btnAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // 검색이름 가져오기
+                //String searchName = autoCompleteTextView.getText().toString();
+                String searchName = "햄";
+                // 햄 검색하면 햄 들어간 이름 리스트 넣기
+                ArrayList<FoodDataDto> searchFoodList = new ArrayList<>();
+                for(int i=0; i<foodList.size();i++){
+                    if(foodList.get(i).getName().contains(searchName)){     // 이름이 포함되면 true
+                        FoodDataDto searchFood = new FoodDataDto();
+                        searchFood = foodList.get(i);
+                        searchFoodList.add(searchFood);
+
+                    }
+                }
+                for(int i=0;i<searchFoodList.size();i++){
+                    System.out.println(i+1+"번째 음식 : " +searchFoodList.get(i).getName());
+                }
+            }
+        });
+
+
 
 
 
