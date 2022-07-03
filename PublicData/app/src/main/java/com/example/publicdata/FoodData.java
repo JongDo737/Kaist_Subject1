@@ -57,6 +57,7 @@ public class FoodData {
                 result);
 
         try{
+            // json 데이터만 뽑아서 ArrayList에 넣는 부분
             JSONObject jsonObject = new JSONObject(result);
 
             JSONArray foodArray = jsonObject.getJSONArray("data");

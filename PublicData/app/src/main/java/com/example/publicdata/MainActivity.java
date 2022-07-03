@@ -50,8 +50,8 @@ public class MainActivity
             System.out.println("공공데이터 API 함수 호출 오류");
         }
 
-        FoodDataDto morning = new FoodDataDto();
 
+        FoodDataDto morning = new FoodDataDto();
         // 햄버거 검색했을 때
         String morningSearch = "햄버거";
         int hambergerPosition = foodSearchByName(morningSearch, foodList);
@@ -103,7 +103,6 @@ public class MainActivity
         datavalue.add(new PieEntry(todayTotalFood.getFat(), "지방"));
         return datavalue;
     }
-
     // 이름을 검색해서 포지션 검색
     public int foodSearchByName(String name, ArrayList<FoodDataDto> foodList) {
         int position;
@@ -112,6 +111,7 @@ public class MainActivity
                 break;
             }
         }
+
         return position;
     }
 
