@@ -2,10 +2,10 @@ package com.example.publicdata;
 
 public class FoodDataDto {
     private String name;
-    private Float calorie;
-    private Float carbohydrate;
-    private Float protein;
-    private Float fat;
+    private Float calorie = 0.0f;
+    private Float carbohydrate = 0.0f;
+    private Float protein = 0.0f;
+    private Float fat = 0.0f;
     public String getName() {
         return name;
     }
@@ -36,4 +36,18 @@ public class FoodDataDto {
     public void setFat(Float fat) {
         this.fat = fat;
     }
+
+    // add Data
+    public void addName(String name) {this.name += ", "+name;    }
+    public void addCalorie(Float calorie) {this.calorie += calorie;    }
+    public void addCarbohydrate(Float carbohydrate) {
+        this.carbohydrate += carbohydrate;
+    }
+    public void addProtein(Float protein) {
+        this.protein += protein;
+    }
+    public void addFat(Float fat) {
+        this.fat += fat;
+    }
+
 }

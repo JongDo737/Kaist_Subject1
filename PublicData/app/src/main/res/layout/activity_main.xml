@@ -57,7 +57,8 @@
                 android:layout_weight="2"
                 android:layout_height="wrap_content"
                 android:inputType="number"
-                android:hint="1, 2, ..." />
+
+                android:hint="1, 2,  . . ." />
             <TextView
                 android:id="@+id/food_amount_fixed"
                 android:layout_weight="1"
@@ -72,7 +73,66 @@
             android:layout_height="wrap_content"
             android:text="확인"
             android:textSize="15dp" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="오늘 섭취한 음식"
+            android:textSize="20sp">
 
+        </TextView>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp">
+            <TextView
+                android:id="@+id/text1"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:textSize="20sp"
+                android:gravity="center"
+                android:layout_weight="1"
+                android:text="이름"
+
+                />
+            <TextView
+                android:id="@+id/text2"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:textSize="20sp"
+                android:gravity="center"
+                android:layout_weight="1"
+                android:text="칼로리" />
+            <TextView
+                android:id="@+id/text3"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:textSize="20sp"
+                android:gravity="center"
+                android:layout_weight="1"
+                android:text="탄수화물" />
+            <TextView
+                android:id="@+id/text4"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:textSize="20sp"
+                android:gravity="center"
+                android:layout_weight="1"
+                android:text="단백질" />
+            <TextView
+                android:id="@+id/text5"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:textSize="20sp"
+                android:gravity="center"
+                android:layout_weight="1"
+                android:text="지방" />
+
+
+        </LinearLayout>
+        <ListView
+            android:id="@+id/listView"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:scrollbars="vertical"/>
         <com.github.mikephil.charting.charts.PieChart
             android:id="@+id/pieChart"
             android:layout_width="match_parent"
@@ -80,10 +140,7 @@
             android:layout_height="500dp">
         </com.github.mikephil.charting.charts.PieChart>
 
-        <ListView
-            android:id="@+id/listView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+
 
     </LinearLayout>>
 
