@@ -139,6 +139,12 @@
             />
 
 
+        <Button
+            android:id="@+id/commitBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="입력완료">
+
         <com.github.mikephil.charting.charts.PieChart
             android:id="@+id/pieChart"
             android:layout_width="match_parent"
@@ -147,11 +153,6 @@
         </com.github.mikephil.charting.charts.PieChart>
 
 
-        <Button
-            android:id="@+id/commitBtn"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="입력완료">
 
         </Button>
     </LinearLayout>>
