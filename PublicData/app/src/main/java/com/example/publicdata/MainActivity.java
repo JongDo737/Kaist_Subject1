@@ -97,15 +97,15 @@ public class MainActivity
         foodAdd(foodSearchByName("국밥",foodList),1,myAdapter);
         foodAdd(foodSearchByName("돼지고기가공품(등심햄)",foodList),1,myAdapter);
 
-//        // 원형 그래프
-//        pieChart = findViewById(R.id.pieChart);
-//
-//        PieDataSet pieDataSet = new PieDataSet(data1(todayTotalFood), "오늘 먹은 음식 : "+todayTotalFood.getName());
-//        pieDataSet.setColors(colorArray);
-//
-//        PieData pieData = new PieData(pieDataSet);
-//        pieChart.setData(pieData);
-//        pieChart.invalidate();
+        // 원형 그래프
+        pieChart = findViewById(R.id.pieChart);
+
+        PieDataSet pieDataSet = new PieDataSet(data1(displayFoodData), "오늘 먹은 음식 : "+displayFoodData.getName());
+        pieDataSet.setColors(colorArray);
+
+        PieData pieData = new PieData(pieDataSet);
+        pieChart.setData(pieData);
+        pieChart.invalidate();
 
         // 칼로리 TextView
 
@@ -190,25 +190,20 @@ public class MainActivity
         else{
             return null;
         }
-
-
-
     }
+    //private ArrayList<Float> get_total_information(ArrayList<FoodDataDto> todayTotalFoodList){
+    //}
     public void foodAdd(FoodDataDto eatData, int foodAmount, MyAdapter myAdapter){
        // float total
         // 인분 수만큼 데이터 추가
         for(int i=0;i < foodAmount; i++){
             todayTotalFoodList.add(eatData);
+            displayFoodData.addName(todayTotalFoodList.get(todayTotalFoodList.size()-1).getName());
+            displayFoodData.addCalorie(todayTotalFoodList.get(todayTotalFoodList.size()-1).getCalorie());
+            displayFoodData.addCarbohydrate(todayTotalFoodList.get(todayTotalFoodList.size()-1).getCarbohydrate());
+            displayFoodData.addProtein(todayTotalFoodList.get(todayTotalFoodList.size()-1).getProtein());
+            displayFoodData.addFat(todayTotalFoodList.get(todayTotalFoodList.size()-1).getFat());
             System.out.println("여기에요 여기 !!!!!!!!! "+todayTotalFoodList.get(i).getName()+" "+todayTotalFoodList.get(i).getCalorie());
-        }
-
-        for(int i=0;i<todayTotalFoodList.size();i++){
-
-            displayFoodData.addName(todayTotalFoodList.get(i).getName());
-            displayFoodData.addCalorie(todayTotalFoodList.get(i).getCalorie());
-            displayFoodData.addCarbohydrate(todayTotalFoodList.get(i).getCarbohydrate());
-            displayFoodData.addProtein(todayTotalFoodList.get(i).getProtein());
-            displayFoodData.addFat(todayTotalFoodList.get(i).getFat());
         }
 
         // 현재 칼로리 변경
@@ -218,7 +213,13 @@ public class MainActivity
         myAdapter.notifyDataSetChanged();
 
         // 파이데이터 변화주기
+        pieChart = findViewById(R.id.pieChart);
+        PieDataSet pieDataSet = new PieDataSet(data1(displayFoodData), "오늘 먹은 음식 : "+displayFoodData.getName());
+        pieDataSet.setColors(colorArray);
 
+        PieData pieData = new PieData(pieDataSet);
+        pieChart.setData(pieData);
+        pieChart.invalidate();
 
     }
     public class MyAdapter extends BaseAdapter {
