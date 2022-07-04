@@ -8,6 +8,7 @@
     android:background="@color/color_white"
     android:orientation="vertical"
     android:fillViewport="true"
+    android:id="@+id/scrollView"
     tools:context=".MainActivity">
     <LinearLayout
         android:layout_width="match_parent"
@@ -128,11 +129,16 @@
 
 
         </LinearLayout>
+
         <ListView
             android:id="@+id/listView"
             android:layout_width="match_parent"
             android:layout_height="300dp"
-            android:scrollbars="vertical"/>
+            android:scrollbars="vertical"
+            android:smoothScrollbar="true"
+            />
+
+
         <com.github.mikephil.charting.charts.PieChart
             android:id="@+id/pieChart"
             android:layout_width="match_parent"

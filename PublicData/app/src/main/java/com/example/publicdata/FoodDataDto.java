@@ -6,6 +6,7 @@ public class FoodDataDto {
     private Float carbohydrate = 0.0f;
     private Float protein = 0.0f;
     private Float fat = 0.0f;
+
     private boolean check = true;
     public String getName() {
         return name;

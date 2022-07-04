@@ -5,14 +5,17 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -47,6 +50,8 @@ public class MainActivity
     EditText foodName;
     EditText food_amount;
 
+    ScrollView scrollView;
+
     Button btnAdd;
 
     ListView listView;
@@ -60,11 +65,16 @@ public class MainActivity
     ArrayList<FoodDataDto> todayTotalFoodList = new ArrayList<>();
 
     FoodDataDto displayFoodData = new FoodDataDto();
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        // 스크롤뷰
+        scrollView = findViewById(R.id.scrollView);
 
         // 리스트 뷰 구성
         ListView listView = (ListView)findViewById(R.id.listView);
@@ -72,6 +82,13 @@ public class MainActivity
 
         listView.setAdapter(myAdapter);
 
+        listView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                scrollView.requestDisallowInterceptTouchEvent(true);
+                return false;
+            }
+        });
         // 음식 데이터 클래스 선언
         FoodData foodData = new FoodData();
 
