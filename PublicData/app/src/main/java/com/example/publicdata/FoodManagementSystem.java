@@ -65,6 +65,11 @@ public class FoodManagementSystem
         scrollView = findViewById(R.id.scrollView);
 
         commitBtn = findViewById(R.id.commitBtn);
+        // 검색 창
+        autoCompleteTextView = (AutoCompleteTextView) findViewById(R.id.autoCompleteTextView);
+        // AutoCompleteTextView 에 아답터를 연결한다.
+        autoCompleteTextView.setAdapter(new ArrayAdapter<String>(this,
+                android.R.layout.simple_dropdown_item_1line, foodNameList ));
 
         //인텐트로 데이터 받기
         Intent intent = getIntent();
@@ -76,7 +81,7 @@ public class FoodManagementSystem
         ListView listView = (ListView)findViewById(R.id.listView);
         final MyAdapter myAdapter = new MyAdapter(this,todayTotalFoodList);
 
-
+        initFood(myAdapter, todayTotalFoodList);
         listView.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
@@ -110,11 +115,7 @@ public class FoodManagementSystem
         // 인분
         food_amount = findViewById(R.id.food_amount);
 
-        // 검색 창
-        autoCompleteTextView = (AutoCompleteTextView) findViewById(R.id.autoCompleteTextView);
-        // AutoCompleteTextView 에 아답터를 연결한다.
-        autoCompleteTextView.setAdapter(new ArrayAdapter<String>(this,
-                android.R.layout.simple_dropdown_item_1line, foodNameList ));
+
 
         // 확인 버튼을 눌렀을 때
         btnAdd.setOnClickListener(new View.OnClickListener() {
@@ -235,15 +236,17 @@ public class FoodManagementSystem
     public void initFood(MyAdapter myAdapter,ArrayList<FoodDataDto> todayTotalFoodList ){
         // float total
         // 인분 수만큼 데이터 추가
-//        for(int i=0;i < foodAmount; i++){
-//            todayTotalFoodList.add(eatData);
-//            displayFoodData.addName(todayTotalFoodList.get(todayTotalFoodList.size()-1).getName());
-//            displayFoodData.addCalorie(todayTotalFoodList.get(todayTotalFoodList.size()-1).getCalorie());
-//            displayFoodData.addCarbohydrate(todayTotalFoodList.get(todayTotalFoodList.size()-1).getCarbohydrate());
-//            displayFoodData.addProtein(todayTotalFoodList.get(todayTotalFoodList.size()-1).getProtein());
-//            displayFoodData.addFat(todayTotalFoodList.get(todayTotalFoodList.size()-1).getFat());
-//        }
-
+        System.out.println("init!!!!!!!!!!!!!!");
+        for(int i=0;i < todayTotalFoodList.size(); i++){
+            System.out.println(todayTotalFoodList.get(i).getName()+" : "+todayTotalFoodList.get(i));
+            displayFoodData.addName(todayTotalFoodList.get(i).getName());
+            displayFoodData.addCalorie(todayTotalFoodList.get(i).getCalorie());
+            displayFoodData.addCarbohydrate(todayTotalFoodList.get(i).getCarbohydrate());
+            displayFoodData.addProtein(todayTotalFoodList.get(i).getProtein());
+            displayFoodData.addFat(todayTotalFoodList.get(i).getFat());
+        }
+        System.out.println("총칼로리");
+        System.out.println(displayFoodData.getCalorie());
         // 현재 칼로리 변경
         nowCalorie = findViewById(R.id.nowCalorie);
         nowCalorie.setText("현재 :  "+displayFoodData.getCalorie()+"Kcal");
