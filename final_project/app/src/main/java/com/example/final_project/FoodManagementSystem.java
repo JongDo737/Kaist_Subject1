@@ -1,6 +1,7 @@
 package com.example.final_project;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -36,7 +37,7 @@ public class FoodManagementSystem
     ProgressBar progressBar;
     TextView nowCalorie;
     TextView wantCalorie;
-
+    TextView progressText;
     EditText foodName;
     EditText food_amount;
 
@@ -63,18 +64,18 @@ public class FoodManagementSystem
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_fms);
-        setTitle("식단 관리 어플");
         // 스크롤뷰
         scrollView = findViewById(R.id.scrollView);
         editBtn = findViewById(R.id.editBtn);
         progressBar = findViewById(R.id.progressBar);
         commitBtn = findViewById(R.id.commitBtn);
+        progressText = findViewById(R.id.progressText);
         // 검색 창
         autoCompleteTextView = (AutoCompleteTextView) findViewById(R.id.autoCompleteTextView);
         // AutoCompleteTextView 에 아답터를 연결한다.
         autoCompleteTextView.setAdapter(new ArrayAdapter<String>(this,
                 android.R.layout.simple_dropdown_item_1line, foodNameList ));
-
+        wantCalorie = findViewById(R.id.wantCalorie);
         //인텐트로 데이터 받기
         Intent intent = getIntent();
         todayTotalFoodList = (ArrayList<FoodDataDto>)intent.getSerializableExtra("foodListByDate");
@@ -96,8 +97,13 @@ public class FoodManagementSystem
         editBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                System.out.println("여기에요 여기 ~!~!!~~!!~!~!~!~~!");
+
                 wantCal = Integer.parseInt(wantCalorie.getText().toString());
-                wantCalorie.setText(wantCal);
+                System.out.println(wantCal);
+
+                wantCalorie.setText(wantCal+"");
+                progressBarUpdate();
 
             }
         });
@@ -191,6 +197,7 @@ public class FoodManagementSystem
                 todayTotalFoodList.remove(position);
                 myAdapter.notifyDataSetChanged();
                 initFood(myAdapter,todayTotalFoodList);
+
                 return false;
             }
         });
@@ -271,6 +278,8 @@ public class FoodManagementSystem
         pieChart.setData(pieData);
         pieChart.invalidate();
 
+        progressBarUpdate();
+
     }
     public void initFood(MyAdapter myAdapter,ArrayList<FoodDataDto> todayTotalFoodList ){
         // 초기화
@@ -292,8 +301,6 @@ public class FoodManagementSystem
         nowCalorie = findViewById(R.id.nowCalorie);
         nowCalorie.setText("현재 :  "+displayFoodData.getCalorie()+"Kcal");
 
-
-
         // 파이데이터 변화주기
         pieChart = findViewById(R.id.pieChart);
         PieDataSet pieDataSet = new PieDataSet(data1(displayFoodData), "오늘 먹은 음식 : "+displayFoodData.getName());
@@ -303,18 +310,31 @@ public class FoodManagementSystem
         pieChart.setData(pieData);
         pieChart.invalidate();
 
+        progressBarUpdate();
+        myAdapter.notifyDataSetChanged();
+
+    }
+
+    // 막대바 상태 업그레이트
+    public void progressBarUpdate(){
         // progressBar
         progressBar.setProgress((int)((displayFoodData.getCalorie()/wantCal)*100));
         int colorCheck = (int) ((displayFoodData.getCalorie()/wantCal)*100);
-        System.out.println("알ㄹ알아랑랑랑랑랑랑랑ㄹ알알알알알ㅇ랑랑라아"+wantCal);
-        System.out.println("알ㄹ알아랑랑랑랑랑랑랑ㄹ알알알알알ㅇ랑랑라아"+displayFoodData.getCalorie());
-        System.out.println("알ㄹ알아랑랑랑랑랑랑랑ㄹ알알알알알ㅇ랑랑라아"+colorCheck);
-//        if(colorCheck>=0 && colorCheck<50){
-//            //progressBar.setIndetermina;
-//        }
-        progressBar.invalidate();
-        myAdapter.notifyDataSetChanged();
 
+//         색깔바꾸기
+        if(colorCheck>=0 && colorCheck<50){
+            progressBar.setProgressTintList(ColorStateList.valueOf(Color.BLUE));
+        }else if(colorCheck>=50 && colorCheck<105){
+            progressBar.setProgressTintList(ColorStateList.valueOf(Color.GREEN));
+        }else if(colorCheck>=105 && colorCheck<120){
+            progressBar.setProgressTintList(ColorStateList.valueOf(Color.YELLOW));
+        }else {
+            progressBar.setProgressTintList(ColorStateList.valueOf(Color.RED));
+        }
+
+
+        progressText.setText("목표 칼로리로 부터 현재 "+colorCheck+"% ");
+        progressBar.invalidate();
     }
     public class MyAdapter extends BaseAdapter {
 
