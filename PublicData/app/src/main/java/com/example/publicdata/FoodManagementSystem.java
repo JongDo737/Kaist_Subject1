@@ -1,5 +1,6 @@
 package com.example.publicdata;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -23,11 +24,12 @@ import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 
 public class FoodManagementSystem
-        extends AppCompatActivity {
+        extends AppCompatActivity implements Serializable {
     PieChart pieChart;
 
     TextView nowCalorie;
@@ -39,6 +41,7 @@ public class FoodManagementSystem
     ScrollView scrollView;
 
     Button btnAdd;
+    Button commitBtn;
 
     ListView listView;
 
@@ -48,7 +51,8 @@ public class FoodManagementSystem
 
     ArrayList<FoodDataDto> foodList = new ArrayList<FoodDataDto>();
     ArrayList<String> foodNameList = new ArrayList<>();
-    ArrayList<FoodDataDto> todayTotalFoodList = new ArrayList<>();
+    ArrayList<FoodDataDto> todayTotalFoodList;
+    String date;
 
     FoodDataDto displayFoodData = new FoodDataDto();
 
@@ -62,11 +66,17 @@ public class FoodManagementSystem
         // 스크롤뷰
         scrollView = findViewById(R.id.scrollView);
 
+        commitBtn = findViewById(R.id.commitBtn);
+
+        //인텐트로 데이터 받기
+        Intent intent = getIntent();
+        todayTotalFoodList = (ArrayList<FoodDataDto>)intent.getSerializableExtra("foodListByDate");
+        date = intent.getStringExtra("Date");
+
         // 리스트 뷰 구성
         ListView listView = (ListView)findViewById(R.id.listView);
         final MyAdapter myAdapter = new MyAdapter(this,todayTotalFoodList);
 
-        listView.setAdapter(myAdapter);
 
         listView.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -89,16 +99,15 @@ public class FoodManagementSystem
         for(int i=0; i<foodList.size(); i++){
             foodNameList.add(foodList.get(i).getName());
         }
-        // search test Data
-        foodNameList.add("aaa");
-        foodNameList.add("aaabbb");
 
         // 임의의 데이터 생성
-        foodAdd(foodSearchByName("햄버거",foodList),1,myAdapter);
-        foodAdd(foodSearchByName("피자",foodList),1,myAdapter);
-        foodAdd(foodSearchByName("햄버거",foodList),1,myAdapter);
-        foodAdd(foodSearchByName("국밥",foodList),1,myAdapter);
-        foodAdd(foodSearchByName("돼지고기가공품(등심햄)",foodList),1,myAdapter);
+        foodAdd(foodSearchByName("햄버거",foodList),1,myAdapter,todayTotalFoodList);
+        foodAdd(foodSearchByName("피자",foodList),1,myAdapter,todayTotalFoodList);
+        foodAdd(foodSearchByName("햄버거",foodList),1,myAdapter,todayTotalFoodList);
+        foodAdd(foodSearchByName("국밥",foodList),1,myAdapter,todayTotalFoodList);
+        foodAdd(foodSearchByName("돼지고기가공품(등심햄)",foodList),1,myAdapter,todayTotalFoodList);
+
+        listView.setAdapter(myAdapter);
 
         // 원형 그래프
         pieChart = findViewById(R.id.pieChart);
@@ -145,7 +154,7 @@ public class FoodManagementSystem
                     if(foodSearchByName(searchName, foodList) != null){
                         FoodDataDto foodData = foodSearchByName(searchName, foodList);
                         //먹은 음식 추가해주기
-                        foodAdd(foodData,foodAmount,myAdapter);
+                        foodAdd(foodData,foodAmount,myAdapter,todayTotalFoodList);
                     }
                     else  {
                         text = "음식 이름을 올바르게 입력해 주세요";
@@ -160,6 +169,19 @@ public class FoodManagementSystem
                     toast.show();
                 }
 
+            }
+        });
+
+        // 마지막 확인버튼
+       commitBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent2 = new Intent();
+                // 데이터 전달
+                intent2.putExtra("result", todayTotalFoodList);
+                intent2.putExtra("Date", date);
+                setResult(RESULT_OK, intent2);
+                finish();
             }
         });
 
@@ -196,7 +218,7 @@ public class FoodManagementSystem
     }
     //private ArrayList<Float> get_total_information(ArrayList<FoodDataDto> todayTotalFoodList){
     //}
-    public void foodAdd(FoodDataDto eatData, int foodAmount, MyAdapter myAdapter){
+    public void foodAdd(FoodDataDto eatData, int foodAmount, MyAdapter myAdapter,ArrayList<FoodDataDto> todayTotalFoodList ){
        // float total
         // 인분 수만큼 데이터 추가
         for(int i=0;i < foodAmount; i++){
