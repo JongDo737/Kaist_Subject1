@@ -24,7 +24,7 @@
                 android:layout_height="wrap_content"
                 android:text="목표 : "
                 android:layout_weight="0.5"
-                android:textSize="20sp"/>
+                android:textSize="15sp"/>
             <EditText
                 android:id="@+id/wantCalorie"
                 android:layout_width="wrap_content"
@@ -32,14 +32,14 @@
                 android:layout_weight="1"
                 android:text="2500"
                 android:gravity="end"
-                android:textSize="20sp"
+                android:textSize="15sp"
                 android:inputType="number"
                 />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text=" Kcal"
-                android:textSize="20sp"/>
+                android:textSize="15sp"/>
 
 
             <Button
@@ -58,7 +58,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="3"
                 android:text=" 현재 :"
-                android:textSize="20sp" />
+                android:textSize="15sp" />
 
         </LinearLayout>
         <LinearLayout
@@ -97,9 +97,6 @@
             android:layout_height="wrap_content"
             android:hint="한국인의 하루 에너지 필요 추정량 남성 : 2600Kcal, 여성 : 2100Kcal "
             android:textSize="10sp"/>
-
-
-
 
         <AutoCompleteTextView
             android:id="@+id/autoCompleteTextView"
