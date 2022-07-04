@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import java.io.InputStream;
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -45,10 +46,13 @@ public class Calendar extends AppCompatActivity implements Serializable{
 
 
         calendarView = (CalendarView) findViewById(R.id.calendarView); // get the reference of CalendarView
-        calendarView.setDate(1463918226920L);
+        calendarView.setDate(System.currentTimeMillis(),false,true);
+        // 현재 날짜까지 표시
+        calendarView.setMaxDate(System.currentTimeMillis());
+        // 현재 날짜 기준으로
         long selectedDate = calendarView.getDate();
-        System.out.println("여기에요 여기 !!!!!!!!! ");
-        System.out.println(selectedDate);
+        // 현재 날짜 2022-07-04
+
 
         Button total_data = (Button)findViewById(R.id.total_data);
         total_data.setOnClickListener(new View.OnClickListener() {      // total_data 버튼 클릭
