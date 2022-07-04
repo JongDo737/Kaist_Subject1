@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.BaseAdapter;
@@ -52,7 +53,7 @@ public class FoodManagementSystem
     ArrayList<FoodDataDto> todayTotalFoodList;
     String date;
 
-    FoodDataDto displayFoodData = new FoodDataDto();
+    FoodDataDto displayFoodData;
 
 
     @Override
@@ -156,6 +157,25 @@ public class FoodManagementSystem
             }
         });
 
+        //꾹 누르면 삭제
+        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int position, long l) {
+                // 에러 메시지 Toast로 띠워주기
+                Context context = getApplicationContext();
+                CharSequence text = "오류";
+                int duration = Toast.LENGTH_SHORT;
+                Toast toast;
+                text = "삭제되었습니다.";
+                toast = Toast.makeText(context, text, duration);
+                toast.show();
+                todayTotalFoodList.remove(position);
+                myAdapter.notifyDataSetChanged();
+                initFood(myAdapter,todayTotalFoodList);
+                return false;
+            }
+        });
+
         // 마지막 확인버튼
        commitBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -234,9 +254,11 @@ public class FoodManagementSystem
 
     }
     public void initFood(MyAdapter myAdapter,ArrayList<FoodDataDto> todayTotalFoodList ){
-        // float total
+        // 초기화
+        displayFoodData = new FoodDataDto();
         // 인분 수만큼 데이터 추가
         System.out.println("init!!!!!!!!!!!!!!");
+
         for(int i=0;i < todayTotalFoodList.size(); i++){
             System.out.println(todayTotalFoodList.get(i).getName()+" : "+todayTotalFoodList.get(i));
             displayFoodData.addName(todayTotalFoodList.get(i).getName());

@@ -51,6 +51,7 @@ public class Calendar extends AppCompatActivity implements Serializable{
         calendarView.setMaxDate(System.currentTimeMillis());
         // 현재 날짜 기준으로
         long selectedDate = calendarView.getDate();
+
         // 현재 날짜 2022-07-04
 
 
