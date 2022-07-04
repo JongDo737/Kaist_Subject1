@@ -5,7 +5,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".Calendar">
+    tools:context=".Calendar"
+    android:background="#D0FFD5"
+    >
     <TextView
         android:id="@+id/title"
         android:layout_width="match_parent"
@@ -28,6 +30,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
+        android:backgroundTint="#ffffff"
+        android:textColor="@color/black"
         android:text="신종민님의 식단 데이터 보기">
 
     </Button>

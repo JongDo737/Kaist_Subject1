@@ -2,9 +2,11 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.final_project">
+
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.READ_CONTACTS"/>
-    <uses-permission android:name="android.permission.Write_CONTACTS"/>
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
+    <uses-permission android:name="android.permission.Write_CONTACTS" />
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -16,6 +18,9 @@
         android:theme="@style/Theme.Final_project"
         tools:targetApi="31">
         <activity
+            android:name=".RubyLoading"
+            android:exported="false" />
+        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
@@ -24,10 +29,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Contacts"></activity>
-        <activity android:name=".AndroidGridLayoutActivity"></activity>
-        <activity android:name=".FullImageActivity"></activity>
-
+        <activity android:name=".Contacts" />
+        <activity android:name=".AndroidGridLayoutActivity" />
+        <activity android:name=".FullImageActivity" />
         <activity
             android:name=".Total_data"
             android:exported="false" />
@@ -43,7 +47,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-
     </application>
+
 </manifest>
