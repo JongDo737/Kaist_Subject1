@@ -133,6 +133,7 @@ public class Total_data extends AppCompatActivity implements Serializable {
 
         PieDataSet pieDataSet = new PieDataSet(data1(todayTotalFood), "총 식사 탄,단,지 비율");
         pieDataSet.setColors(colorArray);
+        pieDataSet.setValueTextSize(15f);
 
         PieData pieData = new PieData(pieDataSet);
         pieChart.setData(pieData);
