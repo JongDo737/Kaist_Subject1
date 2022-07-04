@@ -55,9 +55,12 @@ public class Calendar extends AppCompatActivity implements Serializable{
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), Total_data.class);
+                intent.putExtra("Mapper", (Serializable) foodMapper);
                 startActivity(intent);
             }
         });
+
+
         calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
             public void onSelectedDayChange(@NonNull CalendarView calendarView, int i, int i1, int i2) {

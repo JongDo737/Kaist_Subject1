@@ -2,6 +2,7 @@ package com.example.publicdata;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 
@@ -13,7 +14,10 @@ import com.github.mikephil.charting.data.LineDataSet;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 public class Total_data extends AppCompatActivity {
 
@@ -22,6 +26,7 @@ public class Total_data extends AppCompatActivity {
     private LineChart lineChart_carbohydrate;
     private LineChart lineChart_protein;
     private LineChart lineChart_fat;
+    Map<String, ArrayList<FoodDataDto>> foodMapper = new HashMap<>();
 
     // String은 동적으로 할당하면됨.
     List<String> xAxisValues = new ArrayList<>(Arrays.asList("Jan", "Feb", "March", "April", "May", "June","July", "August", "September", "October", "November", "Decemeber"));
@@ -29,6 +34,21 @@ public class Total_data extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_total_data);
+
+        //인텐트로 데이터 받기
+        Intent intent = getIntent();
+        foodMapper = (Map<String, ArrayList<FoodDataDto>>) intent.getSerializableExtra("foodListByDate");
+        System.out.println(foodMapper == null);
+        Iterator<String> keys = foodMapper.keySet().iterator();
+        while (keys.hasNext()){
+            String key = keys.next();
+            System.out.println(key);
+            for (int i = 0;i < foodMapper.get(key).size();i++){
+                System.out.println(foodMapper.get(key).get(i));
+            }
+        }
+
+
 
         ArrayList<Entry> entry_chart1 = new ArrayList<>(); // 데이터를 담을 Arraylist
         ArrayList<Entry> entry_chart2 = new ArrayList<>();
