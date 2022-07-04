@@ -86,43 +86,43 @@
             android:layout_height="40dp">
             <TextView
                 android:id="@+id/text1"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="40dp"
                 android:textSize="20sp"
                 android:gravity="center"
-                android:layout_weight="1"
+                android:layout_weight="1.5"
                 android:text="이름"
 
                 />
             <TextView
                 android:id="@+id/text2"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="40dp"
-                android:textSize="20sp"
+                android:textSize="17sp"
                 android:gravity="center"
                 android:layout_weight="1"
                 android:text="칼로리" />
             <TextView
                 android:id="@+id/text3"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="40dp"
-                android:textSize="20sp"
+                android:textSize="17sp"
                 android:gravity="center"
                 android:layout_weight="1"
                 android:text="탄수화물" />
             <TextView
                 android:id="@+id/text4"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="40dp"
-                android:textSize="20sp"
+                android:textSize="17sp"
                 android:gravity="center"
                 android:layout_weight="1"
                 android:text="단백질" />
             <TextView
                 android:id="@+id/text5"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="40dp"
-                android:textSize="20sp"
+                android:textSize="17sp"
                 android:gravity="center"
                 android:layout_weight="1"
                 android:text="지방" />
@@ -133,7 +133,7 @@
         <ListView
             android:id="@+id/listView"
             android:layout_width="match_parent"
-            android:layout_height="300dp"
+            android:layout_height="250dp"
             android:scrollbars="vertical"
             android:smoothScrollbar="true"
             />
@@ -145,6 +145,7 @@
             android:layout_height="wrap_content"
             android:text="입력완료">
 
+        </Button>
         <com.github.mikephil.charting.charts.PieChart
             android:id="@+id/pieChart"
             android:layout_width="match_parent"
@@ -152,9 +153,6 @@
             android:layout_height="500dp">
         </com.github.mikephil.charting.charts.PieChart>
 
-
-
-        </Button>
     </LinearLayout>>
 
 

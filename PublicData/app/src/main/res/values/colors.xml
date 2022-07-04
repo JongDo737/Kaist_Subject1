@@ -11,6 +11,12 @@
     <color name="colorPrimaryDark">#024265</color>
     <color name="colorAccent">#05af9b</color>
 
+    <color name="red_good">#F44336</color>
+    <color name="blue_good">#536DFE</color>
+    <color name="green_good">#4CAF50</color>
+    <color name="orange_good">#FF9800</color>
+    <color name="grey_good">#616161</color>
+
     <color name="color_one">#fb7268</color>
     <color name="color_white">#ededf2</color>
     <color name="color_two">#E3E0E0</color>
