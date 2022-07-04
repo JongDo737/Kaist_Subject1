@@ -8,6 +8,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.CalendarView;
 import android.widget.Toast;
 
@@ -19,7 +20,7 @@ import java.util.Map;
 
 public class Calendar extends AppCompatActivity implements Serializable{
     CalendarView calendarView;
-
+    ArrayList<FoodDataDto> foodList = new ArrayList<FoodDataDto>();
 
     //  키값 : 날짜  value 값 날짜별 음식리스트트
    Map<String, ArrayList<FoodDataDto>> foodMapper = new HashMap<>();
@@ -31,6 +32,16 @@ public class Calendar extends AppCompatActivity implements Serializable{
         setContentView(R.layout.activity_calendar);
 
         setTitle("식단 관리 어플");
+        // 음식 데이터 클래스 선언
+        FoodData foodData = new FoodData();
+
+
+        try {
+            foodList = foodData.getAPIData();        //음식 데이터 Array 선언
+
+        } catch (Exception e) {
+            System.out.println("공공데이터 API 함수 호출 오류");
+        }
 
 
         calendarView = (CalendarView) findViewById(R.id.calendarView); // get the reference of CalendarView
@@ -54,22 +65,27 @@ public class Calendar extends AppCompatActivity implements Serializable{
                 String selectDate = i+"-"+ (i1+1)+"-"+i2 ;
                 System.out.println(selectDate);
                 Intent intent = new Intent(Calendar.this ,FoodManagementSystem.class);
-
+                intent.putExtra("foodList",foodList);
+                intent.putExtra("Date",selectDate);
                 // 날짜에 대한 데이터가 있다면
                 if(foodMapper.containsKey(selectDate)){
                     System.out.println("데이터가 있네요 !!!!!!!! ");
                     // 데이터 전달달
-                   intent.putExtra("foodListByDate",foodMapper.get((String)selectDate));
-                    }else{
+                    System.out.println(selectDate);
+                    for(int j=0; j<foodMapper.get(selectDate).size();j++){
+                        System.out.println(foodMapper.get(selectDate).get(j).getName());
+                    }
+                   intent.putExtra("foodListByDate",foodMapper.get(selectDate));
+
+                }else{
                     System.out.println("데이터가 없네요 !!!!!!!! 만들께요 !!!!!!!!");
                     // 데이터 생성
                     ArrayList<FoodDataDto> foodListByDate = new ArrayList<>();
                     foodMapper.put(selectDate,foodListByDate);
                     // 데이터 전달
                     System.out.println(foodMapper.get((String)selectDate)==foodListByDate);
-                    System.out.println("데이터가 없네요 !!!!!!!! 만들께요 !!!!!!!!");
                     intent.putExtra("foodListByDate", foodMapper.get((String)selectDate));
-                    intent.putExtra("Data",selectDate);
+
                 }
                 startActivityForResult(intent, 0);
 
@@ -86,7 +102,16 @@ public class Calendar extends AppCompatActivity implements Serializable{
             if (resultCode == RESULT_OK) {      // 데이터 받기 성공
                 ArrayList<FoodDataDto> foodList =(ArrayList<FoodDataDto>) data.getSerializableExtra("result");
                 String date = data.getStringExtra("Date");
-                foodMapper.replace(date, foodList);
+                foodMapper.put(date, foodList);
+                System.out.println("데이터 받기 !!!!!!!!!!!!!!!!!!!!");
+                System.out.println("date :"+date);
+                for(int i=0;i<foodList.size();i++){
+                    System.out.println(foodList.get(i).getName());
+                }
+                System.out.println("맵데이터 저장 !!!!!!!!!!!!!!!!!!!!");
+                for(int i=0;i<foodList.size();i++){
+                    System.out.println(foodMapper.get(date).get(i).getName());
+                }
 
             } else {   // RESULT_CANCEL
                 Toast.makeText(Calendar.this, "Failed", Toast.LENGTH_SHORT).show();

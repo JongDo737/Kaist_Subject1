@@ -43,8 +43,6 @@ public class FoodManagementSystem
     Button btnAdd;
     Button commitBtn;
 
-    ListView listView;
-
     AutoCompleteTextView autoCompleteTextView;
 
     int[] colorArray = new int[] {Color.LTGRAY, Color.BLUE, Color.RED};
@@ -72,6 +70,7 @@ public class FoodManagementSystem
         Intent intent = getIntent();
         todayTotalFoodList = (ArrayList<FoodDataDto>)intent.getSerializableExtra("foodListByDate");
         date = intent.getStringExtra("Date");
+        foodList = (ArrayList<FoodDataDto>)intent.getSerializableExtra("foodList");
 
         // 리스트 뷰 구성
         ListView listView = (ListView)findViewById(R.id.listView);
@@ -85,27 +84,11 @@ public class FoodManagementSystem
                 return false;
             }
         });
-        // 음식 데이터 클래스 선언
-        FoodData foodData = new FoodData();
 
-
-        try {
-            foodList = foodData.getAPIData();        //음식 데이터 Array 선언
-
-        } catch (Exception e) {
-            System.out.println("공공데이터 API 함수 호출 오류");
-        }
         // 이름 리스트
         for(int i=0; i<foodList.size(); i++){
             foodNameList.add(foodList.get(i).getName());
         }
-
-        // 임의의 데이터 생성
-        foodAdd(foodSearchByName("햄버거",foodList),1,myAdapter,todayTotalFoodList);
-        foodAdd(foodSearchByName("피자",foodList),1,myAdapter,todayTotalFoodList);
-        foodAdd(foodSearchByName("햄버거",foodList),1,myAdapter,todayTotalFoodList);
-        foodAdd(foodSearchByName("국밥",foodList),1,myAdapter,todayTotalFoodList);
-        foodAdd(foodSearchByName("돼지고기가공품(등심햄)",foodList),1,myAdapter,todayTotalFoodList);
 
         listView.setAdapter(myAdapter);
 
@@ -180,6 +163,10 @@ public class FoodManagementSystem
                 // 데이터 전달
                 intent2.putExtra("result", todayTotalFoodList);
                 intent2.putExtra("Date", date);
+                System.out.println("데이터 넘겨주기 !!!!!!!!!!!!!!!!!!!!!!!!!");
+                for(int i=0;i<todayTotalFoodList.size();i++){
+                    System.out.println(todayTotalFoodList.get(i).getName());
+                }
                 setResult(RESULT_OK, intent2);
                 finish();
             }
@@ -216,8 +203,7 @@ public class FoodManagementSystem
             return null;
         }
     }
-    //private ArrayList<Float> get_total_information(ArrayList<FoodDataDto> todayTotalFoodList){
-    //}
+
     public void foodAdd(FoodDataDto eatData, int foodAmount, MyAdapter myAdapter,ArrayList<FoodDataDto> todayTotalFoodList ){
        // float total
         // 인분 수만큼 데이터 추가
@@ -228,8 +214,35 @@ public class FoodManagementSystem
             displayFoodData.addCarbohydrate(todayTotalFoodList.get(todayTotalFoodList.size()-1).getCarbohydrate());
             displayFoodData.addProtein(todayTotalFoodList.get(todayTotalFoodList.size()-1).getProtein());
             displayFoodData.addFat(todayTotalFoodList.get(todayTotalFoodList.size()-1).getFat());
-            System.out.println("여기에요 여기 !!!!!!!!! "+todayTotalFoodList.get(i).getName()+" "+todayTotalFoodList.get(i).getCalorie());
-        }
+           }
+
+        // 현재 칼로리 변경
+        nowCalorie = findViewById(R.id.nowCalorie);
+        nowCalorie.setText("현재 :  "+displayFoodData.getCalorie()+"Kcal");
+
+        myAdapter.notifyDataSetChanged();
+
+        // 파이데이터 변화주기
+        pieChart = findViewById(R.id.pieChart);
+        PieDataSet pieDataSet = new PieDataSet(data1(displayFoodData), "오늘 먹은 음식 : "+displayFoodData.getName());
+        pieDataSet.setColors(colorArray);
+
+        PieData pieData = new PieData(pieDataSet);
+        pieChart.setData(pieData);
+        pieChart.invalidate();
+
+    }
+    public void initFood(MyAdapter myAdapter,ArrayList<FoodDataDto> todayTotalFoodList ){
+        // float total
+        // 인분 수만큼 데이터 추가
+//        for(int i=0;i < foodAmount; i++){
+//            todayTotalFoodList.add(eatData);
+//            displayFoodData.addName(todayTotalFoodList.get(todayTotalFoodList.size()-1).getName());
+//            displayFoodData.addCalorie(todayTotalFoodList.get(todayTotalFoodList.size()-1).getCalorie());
+//            displayFoodData.addCarbohydrate(todayTotalFoodList.get(todayTotalFoodList.size()-1).getCarbohydrate());
+//            displayFoodData.addProtein(todayTotalFoodList.get(todayTotalFoodList.size()-1).getProtein());
+//            displayFoodData.addFat(todayTotalFoodList.get(todayTotalFoodList.size()-1).getFat());
+//        }
 
         // 현재 칼로리 변경
         nowCalorie = findViewById(R.id.nowCalorie);
