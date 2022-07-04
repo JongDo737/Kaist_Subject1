@@ -1,6 +1,8 @@
 package com.example.publicdata;
 
-public class FoodDataDto {
+import java.io.Serializable;
+
+public class FoodDataDto implements Serializable {
     private String name;
     private Float calorie = 0.0f;
     private Float carbohydrate = 0.0f;

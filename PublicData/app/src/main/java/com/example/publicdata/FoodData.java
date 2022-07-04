@@ -8,6 +8,7 @@ import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.io.Serializable;
 import java.lang.reflect.Array;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -47,7 +48,7 @@ public class FoodData {
                 System.out.println("오류올오ㅠㄹㅇㄹ유로유로유로유로유로유류ㅗ");
             }
         }).start();
-        Thread.sleep(3000);
+        Thread.sleep(1500);
 
 
         ArrayList<FoodDataDto> foodList = new ArrayList<>();
