@@ -292,7 +292,7 @@ public class FoodManagementSystem
         nowCalorie = findViewById(R.id.nowCalorie);
         nowCalorie.setText("현재 :  "+displayFoodData.getCalorie()+"Kcal");
 
-        myAdapter.notifyDataSetChanged();
+
 
         // 파이데이터 변화주기
         pieChart = findViewById(R.id.pieChart);
@@ -304,12 +304,16 @@ public class FoodManagementSystem
         pieChart.invalidate();
 
         // progressBar
-        progressBar.setProgress((int)(wantCal/displayFoodData.getCalorie())*100);
-        int colorCheck = (int)(wantCal/displayFoodData.getCalorie())*100;
-        if(colorCheck>=0 && colorCheck<50){
-            //progressBar.setIndetermina;
-        }
-
+        progressBar.setProgress((int)((displayFoodData.getCalorie()/wantCal)*100));
+        int colorCheck = (int) ((displayFoodData.getCalorie()/wantCal)*100);
+        System.out.println("알ㄹ알아랑랑랑랑랑랑랑ㄹ알알알알알ㅇ랑랑라아"+wantCal);
+        System.out.println("알ㄹ알아랑랑랑랑랑랑랑ㄹ알알알알알ㅇ랑랑라아"+displayFoodData.getCalorie());
+        System.out.println("알ㄹ알아랑랑랑랑랑랑랑ㄹ알알알알알ㅇ랑랑라아"+colorCheck);
+//        if(colorCheck>=0 && colorCheck<50){
+//            //progressBar.setIndetermina;
+//        }
+        progressBar.invalidate();
+        myAdapter.notifyDataSetChanged();
 
     }
     public class MyAdapter extends BaseAdapter {
