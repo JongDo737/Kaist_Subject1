@@ -6,6 +6,7 @@ public class FoodDataDto {
     private Float carbohydrate = 0.0f;
     private Float protein = 0.0f;
     private Float fat = 0.0f;
+    private boolean check = true;
     public String getName() {
         return name;
     }
@@ -36,7 +37,12 @@ public class FoodDataDto {
     public void setFat(Float fat) {
         this.fat = fat;
     }
-
+    public boolean getCheck() {
+        return check;
+    }
+    public void setCheck(boolean check){
+        this.check = check;
+    }
     // add Data
     public void addName(String name) {this.name += ", "+name;    }
     public void addCalorie(Float calorie) {this.calorie += calorie;    }

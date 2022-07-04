@@ -14,6 +14,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -89,7 +90,7 @@ public class MainActivity
         foodNameList.add("aaa");
         foodNameList.add("aaabbb");
 
-        // 데이터
+        // 임의의 데이터 생성
         foodAdd(foodSearchByName("햄버거",foodList),1,myAdapter);
         foodAdd(foodSearchByName("피자",foodList),1,myAdapter);
         foodAdd(foodSearchByName("햄버거",foodList),1,myAdapter);
@@ -126,11 +127,35 @@ public class MainActivity
             public void onClick(View view) {
                 // 검색이름 가져오기
                 String searchName = autoCompleteTextView.getText().toString();
-                int foodAmount = Integer.parseInt(food_amount.getText().toString());
-                FoodDataDto foodData = foodSearchByName(searchName, foodList);
+                int foodAmount = 1;
 
-                //먹은 음식 추가해주기
-                foodAdd(foodData,foodAmount,myAdapter);
+
+                // 예외 처리
+                // 에러 메시지 Toast로 띠워주기
+                Context context = getApplicationContext();
+                CharSequence text = "오류";
+                int duration = Toast.LENGTH_SHORT;
+                Toast toast;
+
+                try{     // 숫자가 정상적으로 들어오게 되면
+                    foodAmount = Integer.parseInt(food_amount.getText().toString());
+                    if(foodSearchByName(searchName, foodList) != null){
+                        FoodDataDto foodData = foodSearchByName(searchName, foodList);
+                        //먹은 음식 추가해주기
+                        foodAdd(foodData,foodAmount,myAdapter);
+                    }
+                    else  {
+                        text = "음식 이름을 올바르게 입력해 주세요";
+                        toast = Toast.makeText(context, text, duration);
+                        toast.show();
+                    }
+
+                }catch (NumberFormatException e){
+                    // 숫자가 아닌게 들어오게 되면
+                    text = "숫자를 입력해 주세요";
+                    toast = Toast.makeText(context, text, duration);
+                    toast.show();
+                }
 
             }
         });
@@ -150,15 +175,24 @@ public class MainActivity
     // 이름을 검색해서 포지션 검색
     public FoodDataDto foodSearchByName(String name, ArrayList<FoodDataDto> foodList) {
         int position;
-        FoodDataDto foodData;
+        boolean check = false;
+        FoodDataDto foodData = new FoodDataDto();
         for(position=0; position<foodList.size();position++){
             if(foodList.get(position).getName().equals(name)){
+                check = true;
                 break;
             }
         }
-        foodData = foodList.get(position);
+        if(check){
+            foodData = foodList.get(position);
+            return foodData;
+        }
+        else{
+            return null;
+        }
 
-        return foodData;
+
+
     }
     public void foodAdd(FoodDataDto eatData, int foodAmount, MyAdapter myAdapter){
        // float total
