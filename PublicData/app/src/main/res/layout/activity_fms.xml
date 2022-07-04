@@ -147,7 +147,14 @@
         </com.github.mikephil.charting.charts.PieChart>
 
 
+        <Button
+            android:id="@+id/commitBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="입력완료">
 
+        </Button>
     </LinearLayout>>
+
 
 </ScrollView>
