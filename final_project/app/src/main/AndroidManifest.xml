@@ -27,5 +27,23 @@
         <activity android:name=".Contacts"></activity>
         <activity android:name=".AndroidGridLayoutActivity"></activity>
         <activity android:name=".FullImageActivity"></activity>
+
+        <activity
+            android:name=".Total_data"
+            android:exported="false" />
+        <activity
+            android:name=".FoodManagementSystem"
+            android:exported="true" />
+        <activity
+            android:name=".Calendar"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+
     </application>
 </manifest>

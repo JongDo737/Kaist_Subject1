@@ -31,5 +31,15 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        Button TAB3 = (Button)findViewById(R.id.TAB3);
+        TAB3.setOnClickListener(new View.OnClickListener() {      // TAB2 버튼 클릭
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), Calendar.class);
+                startActivity(intent);
+            }
+        });
+
     }
 }
