@@ -19,24 +19,87 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
-
             <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="목표 : "
+                android:layout_weight="0.5"
+                android:textSize="20sp"/>
+            <EditText
                 android:id="@+id/wantCalorie"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="2"
-                android:text="목표 : 2500Kcal"
-                android:textSize="20sp" />
+                android:layout_weight="1"
+                android:text="2500"
+                android:gravity="end"
+                android:textSize="20sp"
+                android:inputType="number"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=" Kcal"
+                android:textSize="20sp"/>
+
+
+            <Button
+                android:id="@+id/editBtn"
+                android:layout_width="70dp"
+                android:layout_height="48dp"
+                android:text="수정"
+                android:textSize="10dp"
+                android:theme="@style/Theme.Material3.DynamicColors.Dark"
+
+                />
 
             <TextView
                 android:id="@+id/nowCalorie"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="2"
-                android:text="현재 :"
+                android:layout_weight="3"
+                android:text=" 현재 :"
                 android:textSize="20sp" />
 
         </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+
+            <ProgressBar
+                android:id="@+id/progressBar"
+                android:layout_marginTop="10dp"
+                android:indeterminate="true"
+                style="@android:style/Widget.ProgressBar.Horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:progress="80"
+                android:max="150"
+
+                />
+            <TextView
+                android:id="@+id/progressText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="목표 칼로리로 부터 현재 80% "
+                android:gravity="end"
+                android:layout_marginEnd="15dp"
+                ></TextView>
+
+
+        </LinearLayout>
+
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="한국인의 하루 에너지 필요 추정량 남성 : 2600Kcal, 여성 : 2100Kcal "
+            android:textSize="10sp"/>
+
+
+
 
         <AutoCompleteTextView
             android:id="@+id/autoCompleteTextView"
@@ -52,14 +115,16 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
+
             <EditText
                 android:id="@+id/food_amount"
                 android:layout_width="0dp"
-                android:layout_weight="2"
                 android:layout_height="wrap_content"
-                android:inputType="number"
+                android:layout_weight="2"
+                android:hint="1, 2,  . . ."
 
-                android:hint="1, 2,  . . ." />
+                android:inputType="number"
+                tools:ignore="TouchTargetSizeCheck" />
             <TextView
                 android:id="@+id/food_amount_fixed"
                 android:layout_weight="1"
@@ -73,7 +138,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="확인"
-            android:textSize="15dp" />
+            android:textSize="15dp"
+            android:theme="@style/Theme.Material3.DynamicColors.Dark"
+            />
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -143,7 +210,9 @@
             android:id="@+id/commitBtn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="입력완료">
+            android:text="입력완료"
+            android:theme="@style/Theme.Material3.DynamicColors.Dark"
+            ></Button>
 
         </Button>
         <com.github.mikephil.charting.charts.PieChart
