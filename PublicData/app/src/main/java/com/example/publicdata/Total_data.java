@@ -12,6 +12,7 @@ import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -19,7 +20,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-public class Total_data extends AppCompatActivity {
+public class Total_data extends AppCompatActivity implements Serializable {
 
     //선 그래프
     private LineChart lineChart_calorie;
@@ -30,6 +31,8 @@ public class Total_data extends AppCompatActivity {
 
     // String은 동적으로 할당하면됨.
     List<String> xAxisValues = new ArrayList<>(Arrays.asList("Jan", "Feb", "March", "April", "May", "June","July", "August", "September", "October", "November", "Decemeber"));
+    // intent로 받은 date
+    List<String> date = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,16 +40,20 @@ public class Total_data extends AppCompatActivity {
 
         //인텐트로 데이터 받기
         Intent intent = getIntent();
-        foodMapper = (Map<String, ArrayList<FoodDataDto>>) intent.getSerializableExtra("foodListByDate");
+        foodMapper = (Map<String, ArrayList<FoodDataDto>>) intent.getSerializableExtra("Mapper");
         System.out.println(foodMapper == null);
         Iterator<String> keys = foodMapper.keySet().iterator();
+        System.out.println("jerejerejerejerejere");
+        System.out.println(keys);
         while (keys.hasNext()){
             String key = keys.next();
+            date.add(key);
             System.out.println(key);
             for (int i = 0;i < foodMapper.get(key).size();i++){
-                System.out.println(foodMapper.get(key).get(i));
+                System.out.println(foodMapper.get(key).get(i).getName());
             }
         }
+        
 
 
 

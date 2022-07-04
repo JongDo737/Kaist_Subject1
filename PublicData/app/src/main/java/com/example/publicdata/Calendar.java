@@ -65,7 +65,20 @@ public class Calendar extends AppCompatActivity implements Serializable{
             @Override
             public void onSelectedDayChange(@NonNull CalendarView calendarView, int i, int i1, int i2) {
                 System.out.println("여기에요 여기 !!!!!!!!! ");
-                String selectDate = i+"-"+ (i1+1)+"-"+i2 ;
+                // 날짜 format xxxx-xx-xx로 고정시키기
+                String selectDate = "";
+                selectDate += i+"-";
+                if ((i1+1) < 10){
+                    selectDate += "0"+(i1+1);
+                } else{
+                    selectDate += (i1+1);
+                }
+                if (i2 < 10){
+                    selectDate += "-0"+i2 ;
+                } else {
+                    selectDate += "-" + i2;
+                }
+
                 System.out.println(selectDate);
                 Intent intent = new Intent(Calendar.this ,FoodManagementSystem.class);
                 intent.putExtra("foodList",foodList);
