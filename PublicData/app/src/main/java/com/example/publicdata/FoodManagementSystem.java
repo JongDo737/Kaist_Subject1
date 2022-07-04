@@ -14,6 +14,7 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -32,7 +33,7 @@ import java.util.ArrayList;
 public class FoodManagementSystem
         extends AppCompatActivity implements Serializable {
     PieChart pieChart;
-
+    ProgressBar progressBar;
     TextView nowCalorie;
     TextView wantCalorie;
 
@@ -43,11 +44,12 @@ public class FoodManagementSystem
 
     Button btnAdd;
     Button commitBtn;
+    Button editBtn;
 
     AutoCompleteTextView autoCompleteTextView;
 
     int[] colorArray = new int[] {Color.LTGRAY, Color.BLUE, Color.RED};
-
+    int wantCal = 2500;
     ArrayList<FoodDataDto> foodList = new ArrayList<FoodDataDto>();
     ArrayList<String> foodNameList = new ArrayList<>();
     ArrayList<FoodDataDto> todayTotalFoodList;
@@ -64,7 +66,8 @@ public class FoodManagementSystem
         setTitle("식단 관리 어플");
         // 스크롤뷰
         scrollView = findViewById(R.id.scrollView);
-
+        editBtn = findViewById(R.id.editBtn);
+        progressBar = findViewById(R.id.progressBar);
         commitBtn = findViewById(R.id.commitBtn);
         // 검색 창
         autoCompleteTextView = (AutoCompleteTextView) findViewById(R.id.autoCompleteTextView);
@@ -83,6 +86,22 @@ public class FoodManagementSystem
         final MyAdapter myAdapter = new MyAdapter(this,todayTotalFoodList);
 
         initFood(myAdapter, todayTotalFoodList);
+
+
+
+
+
+
+        //총 칼로리 수정버튼
+        editBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                wantCal = Integer.parseInt(wantCalorie.getText().toString());
+                wantCalorie.setText(wantCal);
+
+            }
+        });
+        // 리스트뷰 스크롤기능
         listView.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
@@ -283,6 +302,14 @@ public class FoodManagementSystem
         PieData pieData = new PieData(pieDataSet);
         pieChart.setData(pieData);
         pieChart.invalidate();
+
+        // progressBar
+        progressBar.setProgress((int)(wantCal/displayFoodData.getCalorie())*100);
+        int colorCheck = (int)(wantCal/displayFoodData.getCalorie())*100;
+        if(colorCheck>=0 && colorCheck<50){
+            //progressBar.setIndetermina;
+        }
+
 
     }
     public class MyAdapter extends BaseAdapter {

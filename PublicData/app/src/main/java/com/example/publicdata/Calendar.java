@@ -8,6 +8,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.View;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.CalendarView;
 import android.widget.Toast;
@@ -32,7 +33,6 @@ public class Calendar extends AppCompatActivity implements Serializable{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_calendar);
 
-        setTitle("식단 관리 어플");
         // 음식 데이터 클래스 선언
         FoodData foodData = new FoodData();
 
@@ -114,7 +114,6 @@ public class Calendar extends AppCompatActivity implements Serializable{
 
             }
         });
-
 
     }
     @Override
