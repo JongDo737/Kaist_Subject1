@@ -27,9 +27,7 @@ public class Calendar extends AppCompatActivity implements Serializable{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_calendar);
-        //로딩창
-        Intent intentLoding = new Intent(this, RubyLoading.class);
-        startActivity(intentLoding);
+
 
         // 음식 데이터 클래스 선언
         FoodData foodData = new FoodData();
