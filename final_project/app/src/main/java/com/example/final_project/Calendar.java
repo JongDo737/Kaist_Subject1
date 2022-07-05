@@ -98,6 +98,8 @@ public class Calendar extends AppCompatActivity implements Serializable{
                     }
                     intent.putExtra("foodListByDate",foodMapper.get(selectDate));
                     intent.putExtra("calorie_target",CalroieMapper.get(selectDate));
+
+                  
                 }else{
                     System.out.println("데이터가 없네요 !!!!!!!! 만들께요 !!!!!!!!");
                     // 데이터 생성
