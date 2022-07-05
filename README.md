@@ -1,4 +1,6 @@
-# 카이스트 공동과제1
+# 햅삐 루피
+
+![image](https://user-images.githubusercontent.com/92903481/177324695-42682d19-093c-475e-8b75-d6313ff14102.png)
 
 ## 
 
