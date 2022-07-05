@@ -79,9 +79,10 @@ public class FoodManagementSystem
         //인텐트로 데이터 받기
         Intent intent = getIntent();
         todayTotalFoodList = (ArrayList<FoodDataDto>)intent.getSerializableExtra("foodListByDate");
+        wantCal = intent.getIntExtra("calorie_target", 2500);
         date = intent.getStringExtra("Date");
         foodList = (ArrayList<FoodDataDto>)intent.getSerializableExtra("foodList");
-
+        wantCalorie.setText(wantCal+"");
         // 리스트 뷰 구성
         ListView listView = (ListView)findViewById(R.id.listView);
         final MyAdapter myAdapter = new MyAdapter(this,todayTotalFoodList);
@@ -210,6 +211,7 @@ public class FoodManagementSystem
                 // 데이터 전달
                 intent2.putExtra("result", todayTotalFoodList);
                 intent2.putExtra("Date", date);
+                intent2.putExtra("target", wantCal);
                 System.out.println("데이터 넘겨주기 !!!!!!!!!!!!!!!!!!!!!!!!!");
                 for(int i=0;i<todayTotalFoodList.size();i++){
                     System.out.println(todayTotalFoodList.get(i).getName());
