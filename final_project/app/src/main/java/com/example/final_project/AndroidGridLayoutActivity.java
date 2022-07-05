@@ -3,9 +3,13 @@ package com.example.final_project;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.media.ExifInterface;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -17,6 +21,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -42,12 +47,10 @@ public class AndroidGridLayoutActivity extends Activity implements Serializable 
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent();
+                Intent intent = new Intent(Intent.ACTION_PICK);
+                intent.setData(android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                 intent.setType("image/*");
-                intent.setAction(Intent.ACTION_GET_CONTENT);
                 startActivityForResult(intent, 1);
-                System.out.println("여기요 여기 !");
-
             }
         });
 
@@ -82,8 +85,14 @@ public class AndroidGridLayoutActivity extends Activity implements Serializable 
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
+                in1.putExtra("is_heart", galleryDto.getIs_heart());
                 in1.putExtra("position", position);
-                in1.putExtra("text",galleryDto.getImgTitle());
+                in1.putExtra("title",galleryDto.getImgTitle());
+                in1.putExtra("desc",galleryDto.getImgDes());
+                System.out.println("asdsadasdasdzxczxczxczczxczxczxczx");
+                System.out.println(galleryDto.getImgDes());
+                in1.putExtra("uri",galleryDto.getUri());
+                in1.putExtra("path",galleryDto.getPath());
                 System.out.println("전송 !!!!!!!!!!!!!!!!!!!!!!");
                 System.out.println("position : "+position);
                 startActivityForResult(in1,200);
@@ -103,16 +112,25 @@ public class AndroidGridLayoutActivity extends Activity implements Serializable 
             System.out.println("open 버튼 눌렀을 때 !!!!!!!!! ");
             // Make sure the request was successful
             if (resultCode == RESULT_OK) {
+                String imagePath = getRealPathFromURI(data.getData()); // path 경로
+                System.out.println(imagePath);
+                System.out.println("sdfdsfdsafsfasfasdfasdadsfasfdas");
+                ExifInterface exif = null;
+                galleryDto.setPath(imagePath);
+                galleryDto.setUri(data.getData());
                 try {
-                    // 선택한 이미지에서 비트맵 생성
+                    exif = new ExifInterface(imagePath);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                try {
                     InputStream in = getContentResolver().openInputStream(data.getData());
                     Bitmap img = BitmapFactory.decodeStream(in);
                     in.close();
-                    // 이미지 표시
+                    System.out.println(img);
+                    System.out.println("여기여기여기여기여기여기여기여기여기여기여기여기");
                     galleryDto.setImg(img);
                     galleryList.add(galleryDto);
-                    System.out.println("여기요 여기 333333");
-
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -129,15 +147,30 @@ public class AndroidGridLayoutActivity extends Activity implements Serializable 
         // fullImage 후
         else if(requestCode == 200) {
             if (resultCode == RESULT_OK) {      // 데이터 받기 성공
-                galleryDto = (GalleryDto)data.getSerializableExtra("result");
-                String positionStr = data.getStringExtra("position");
-
-
+                int pos = data.getIntExtra("position", 0);
+                Boolean is_heart = data.getBooleanExtra("is_heart", false);
+                String title = data.getStringExtra("title");
+                String desc = data.getStringExtra("desc");
+                galleryList.get(pos).setImgTitle(title);
+                galleryList.get(pos).setImgDes(desc);
+                System.out.println(desc);
+                System.out.println("zxcjkvhuahvnakjsdbfgkjsdbhjk");
+                galleryList.get(pos).setIs_heart(is_heart);
             } else {   // RESULT_CANCEL
 
             }
         }
 
+    }
+
+    private String getRealPathFromURI(Uri contentUri) {
+        int column_index=0;
+        String[] proj = {MediaStore.Images.Media.DATA};
+        Cursor cursor = getContentResolver().query(contentUri, proj, null, null, null);
+        if(cursor.moveToFirst()){
+            column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+        }
+        return cursor.getString(column_index);
     }
 
     public class ImageAdapter extends BaseAdapter {
