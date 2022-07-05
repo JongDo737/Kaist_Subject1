@@ -21,6 +21,7 @@ public class Calendar extends AppCompatActivity implements Serializable{
 
     //  키값 : 날짜  value 값 날짜별 음식리스트트
    Map<String, ArrayList<FoodDataDto>> foodMapper = new HashMap<>();
+   Map<String, Integer> CalroieMapper = new HashMap<>();
 
 
     @Override
@@ -59,6 +60,7 @@ public class Calendar extends AppCompatActivity implements Serializable{
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), Total_data.class);
                 intent.putExtra("Mapper", (Serializable) foodMapper);
+                intent.putExtra("calorie_mapper", (Serializable) CalroieMapper);
                 startActivity(intent);
             }
         });
@@ -94,17 +96,18 @@ public class Calendar extends AppCompatActivity implements Serializable{
                     for(int j=0; j<foodMapper.get(selectDate).size();j++){
                         System.out.println(foodMapper.get(selectDate).get(j).getName());
                     }
-                   intent.putExtra("foodListByDate",foodMapper.get(selectDate));
-
+                    intent.putExtra("foodListByDate",foodMapper.get(selectDate));
+                    intent.putExtra("calorie_target",CalroieMapper.get(selectDate));
                 }else{
                     System.out.println("데이터가 없네요 !!!!!!!! 만들께요 !!!!!!!!");
                     // 데이터 생성
                     ArrayList<FoodDataDto> foodListByDate = new ArrayList<>();
                     foodMapper.put(selectDate,foodListByDate);
+                    CalroieMapper.put(selectDate,2500);
                     // 데이터 전달
                     System.out.println(foodMapper.get((String)selectDate)==foodListByDate);
                     intent.putExtra("foodListByDate", foodMapper.get((String)selectDate));
-
+                    intent.putExtra("calorie_target",CalroieMapper.get(selectDate));
                 }
                 startActivityForResult(intent, 0);
 
@@ -120,7 +123,9 @@ public class Calendar extends AppCompatActivity implements Serializable{
             if (resultCode == RESULT_OK) {      // 데이터 받기 성공
                 ArrayList<FoodDataDto> foodList =(ArrayList<FoodDataDto>) data.getSerializableExtra("result");
                 String date = data.getStringExtra("Date");
+                int target = data.getIntExtra("target", 2500);
                 foodMapper.put(date, foodList);
+                CalroieMapper.put(date, target);
                 System.out.println("데이터 받기 !!!!!!!!!!!!!!!!!!!!");
                 System.out.println("date :"+date);
                 for(int i=0;i<foodList.size();i++){

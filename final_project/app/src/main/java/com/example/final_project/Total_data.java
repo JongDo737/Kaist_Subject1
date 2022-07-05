@@ -36,6 +36,7 @@ public class Total_data extends AppCompatActivity implements Serializable {
     private LineChart lineChart_fat;
     FoodDataDto todayTotalFood = new FoodDataDto();
     Map<String, ArrayList<FoodDataDto>> foodMapper = new HashMap<>();
+    Map<String, Integer> CalroieMapper = new HashMap<>();
 
     int[] colorArray = new int[] {Color.LTGRAY, Color.BLUE, Color.RED};
 
@@ -54,14 +55,12 @@ public class Total_data extends AppCompatActivity implements Serializable {
         //인텐트로 데이터 받기
         Intent intent = getIntent();
         foodMapper = (Map<String, ArrayList<FoodDataDto>>) intent.getSerializableExtra("Mapper");
+        CalroieMapper = (Map<String, Integer>) intent.getSerializableExtra("calorie_mapper");
         System.out.println(foodMapper == null);
         Iterator<String> keys = foodMapper.keySet().iterator();
         while (keys.hasNext()){
             String key = keys.next();
             date.add(key);
-            for (int i = 0;i < foodMapper.get(key).size();i++){
-                System.out.println(foodMapper.get(key).get(i).getName());
-            }
         }
         if (date.size()==0){
             setContentView(R.layout.no_data);
@@ -70,8 +69,6 @@ public class Total_data extends AppCompatActivity implements Serializable {
             setContentView(R.layout.activity_total_data);
         }
 
-
-
         Collections.sort(date);
 
         ArrayList<Entry> entry_chart_calorie = new ArrayList<>(); // 데이터를 담을 Arraylist
@@ -79,6 +76,7 @@ public class Total_data extends AppCompatActivity implements Serializable {
         ArrayList<Entry> entry_chart_protein = new ArrayList<>(); // 데이터를 담을 Arraylist
         ArrayList<Entry> entry_chart_fat = new ArrayList<>(); // 데이터를 담을 Arraylist
 
+        ArrayList<Entry> target_calorie = new ArrayList<>();
         ArrayList<Entry> avg_calorie = new ArrayList<>(); // 데이터를 담을 Arraylist
         ArrayList<Entry> avg_carbohydrate = new ArrayList<>(); // 데이터를 담을 Arraylist
         ArrayList<Entry> avg_protein = new ArrayList<>(); // 데이터를 담을 Arraylist
@@ -88,6 +86,8 @@ public class Total_data extends AppCompatActivity implements Serializable {
         for (int i=0;i<date.size();i++){
             String key = date.get(i);
             ArrayList<FoodDataDto> foodList = foodMapper.get(key);
+            int target = CalroieMapper.get(key);
+            target_calorie.add(new Entry((float) i, target));
             float calorie = 0; float carbohydrate = 0;
             float protein = 0; float fat = 0;
             for (int k = 0;k<foodList.size();k++){
@@ -154,6 +154,8 @@ public class Total_data extends AppCompatActivity implements Serializable {
         LineDataSet lineDataSet_protein = new LineDataSet(entry_chart_protein, "단백질");
         LineDataSet lineDataSet_fat = new LineDataSet(entry_chart_fat, "지방");
 
+        //목표값
+        LineDataSet lineDataSet_calorie_target = new LineDataSet(target_calorie, "칼로리 목표값");
         //평균값들
         LineDataSet lineDataSet_calorie_avg = new LineDataSet(avg_calorie, "칼로리 평균값");
         LineDataSet lineDataSet_carbohydrate_avg = new LineDataSet(avg_carbohydrate, "탄수화물 평균값");
@@ -168,7 +170,6 @@ public class Total_data extends AppCompatActivity implements Serializable {
         LineData chartData_fat = new LineData();
 
         //Summary data
-        chartData_summary.addDataSet(lineDataSet_calorie);
         chartData_summary.addDataSet(lineDataSet_carbohydrate);
         chartData_summary.addDataSet(lineDataSet_protein);
         chartData_summary.addDataSet(lineDataSet_fat);
@@ -176,6 +177,7 @@ public class Total_data extends AppCompatActivity implements Serializable {
         // 탄단지에 대한 값, 평균값을 그려줌.
         chartData_calorie.addDataSet(lineDataSet_calorie);
         chartData_calorie.addDataSet(lineDataSet_calorie_avg);
+        chartData_calorie.addDataSet(lineDataSet_calorie_target);
 
         chartData_carbohydrate.addDataSet(lineDataSet_carbohydrate);
         chartData_carbohydrate.addDataSet(lineDataSet_carbohydrate_avg);
@@ -187,10 +189,11 @@ public class Total_data extends AppCompatActivity implements Serializable {
         chartData_fat.addDataSet(lineDataSet_fat_avg);
 
         // 해당 LineDataSet의 색 설정 :: 각 Line 과 관련된 세팅은 여기서 설정한다.
-        lineDataSet_calorie.setColor(ContextCompat.getColor(this, R.color.red_good));
-        lineDataSet_carbohydrate.setColor(ContextCompat.getColor(this, R.color.blue_good));
-        lineDataSet_protein.setColor(ContextCompat.getColor(this, R.color.orange_good));
-        lineDataSet_fat.setColor(ContextCompat.getColor(this, R.color.grey_good));
+        lineDataSet_calorie.setColor(ContextCompat.getColor(this, R.color.grey_good));
+        lineDataSet_carbohydrate.setColor(ContextCompat.getColor(this, R.color.red_good));
+        lineDataSet_protein.setColor(ContextCompat.getColor(this, R.color.blue_good));
+        lineDataSet_fat.setColor(ContextCompat.getColor(this, R.color.orange_good));
+        lineDataSet_calorie_target.setColor(ContextCompat.getColor(this, R.color.rupee));
 
         // 평균값 색깔
         lineDataSet_calorie_avg.setColor(ContextCompat.getColor(this, R.color.green_good));
@@ -203,6 +206,7 @@ public class Total_data extends AppCompatActivity implements Serializable {
         lineDataSet_carbohydrate.setLineWidth(2);
         lineDataSet_protein.setLineWidth(2);
         lineDataSet_fat.setLineWidth(2);
+        lineDataSet_calorie_target.setLineWidth(3);
 
         lineDataSet_calorie_avg.setLineWidth(5);
         lineDataSet_carbohydrate_avg.setLineWidth(5);

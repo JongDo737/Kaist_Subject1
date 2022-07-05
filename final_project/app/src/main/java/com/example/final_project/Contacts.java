@@ -10,6 +10,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.ContactsContract;
@@ -27,11 +28,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
+import java.net.URL;
 import java.util.ArrayList;
 
 public class Contacts extends Activity {
     private ArrayList<information> information_list = new ArrayList<>();
-
+    private ArrayList<Uri> urllist = new ArrayList<>();
     public static final int PERMISSIONS_REQUEST_READ_CONTACTS = 1;
     Button btnShowContacts;
 
@@ -62,6 +64,8 @@ public class Contacts extends Activity {
         final EditText email = findViewById(R.id.email);
 
         Button btnAdd = findViewById(R.id.btnAdd);
+
+        //연락처 추가 버튼
         btnAdd.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 information inf = new information();
@@ -78,9 +82,15 @@ public class Contacts extends Activity {
                 startActivity(intent);
             }
         });
+        // list 꾹 누를 때 버튼
         list.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @SuppressLint("Range")
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent editIntent = new Intent(Intent.ACTION_VIEW);
+                editIntent.setDataAndType(urllist.get(position), ContactsContract.Contacts.CONTENT_ITEM_TYPE);
+                editIntent.putExtra("finishActivityOnSaveCompleted", true);
+                startActivity(editIntent);
+                /*
                 String key = information_list.get(position).getKey();
                 String ID = information_list.get(position).getId();
                 String name = information_list.get(position).getName();
@@ -110,6 +120,7 @@ public class Contacts extends Activity {
                 String line = "";
                 line = String.format("%4d",lookupKeyIndex);
                 System.out.println(currentLookupKey);
+                 */
                 return false;
             }
         });
@@ -120,27 +131,23 @@ public class Contacts extends Activity {
         //TODO get contacts code here
         //Toast.makeText(this, "Get contacts ....", Toast.LENGTH_LONG).show();
         information_list = new ArrayList<information>();
+        urllist = new ArrayList<Uri>();
         ContentResolver cr = getContentResolver();
         System.out.println(ContactsContract.Contacts.CONTENT_URI);
         Cursor cur = cr.query(ContactsContract.Contacts.CONTENT_URI , null ,null, null, null);
         if(cur.getCount()>0){
-            String line = "";
             while(cur.moveToNext()){
                 information inf = new information();
                 int id = cur.getInt(cur.getColumnIndex(ContactsContract.Contacts._ID));
-                String ID = cur.getString(cur.getColumnIndex(ContactsContract.Contacts._ID));
+                long long_id = cur.getLong(cur.getColumnIndex(ContactsContract.Contacts._ID));
                 String key = cur.getString(cur.getColumnIndex(ContactsContract.Contacts.LOOKUP_KEY));
-                //String key = cur.getString(cur.getColumnIndex(ContactsContract.Contacts.LOOKUP_KEY));
-                System.out.println("AAAAAAAAAAAAAA");
-                System.out.println(cur.getColumnIndex(ContactsContract.Contacts.LOOKUP_KEY));
-                System.out.println(key);
-                System.out.println("BBBBBBBBBBBBBBB");
-                line = String.format("%4d",id);
                 String name = cur.getString(cur.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME));
-                line += " " + name;
+                Uri selectedContactUri = ContactsContract.Contacts.getLookupUri(long_id, key);
                 inf.setName(name);
                 inf.setKey(key);
-                inf.setId(ID);
+                inf.setLong_id(long_id);
+                inf.setUrl(selectedContactUri);
+                urllist.add(selectedContactUri);
 
                 Cursor eCur = cr.query(ContactsContract.CommonDataKinds.Email.CONTENT_URI, null, ContactsContract.CommonDataKinds.Email.CONTACT_ID + "=?", new String[]{String.valueOf(id)}, null);
                 String email = new String();
@@ -158,7 +165,6 @@ public class Contacts extends Activity {
 
                     while (pCur.moveToNext()) {
                         phoneNum += pCur.getString(pCur.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
-                        line += " " + phoneNum;
                         phoneType[i] = pCur.getString(pCur.getColumnIndex(ContactsContract.CommonDataKinds.Phone.TYPE));
                         i++;
                     }
@@ -167,9 +173,6 @@ public class Contacts extends Activity {
                     adapter.notifyDataSetChanged();
 
                 }
-//                numbook.add(line);
-                Toast.makeText(this, line, Toast.LENGTH_LONG).show();
-                line ="";
             }
         }
 
