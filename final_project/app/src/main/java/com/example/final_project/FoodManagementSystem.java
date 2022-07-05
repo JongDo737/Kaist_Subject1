@@ -99,20 +99,11 @@ public class FoodManagementSystem
 
         initFood(myAdapter, todayTotalFoodList);
 
-
-
-
-
-
         //총 칼로리 수정버튼
         editBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                System.out.println("여기에요 여기 ~!~!!~~!!~!~!~!~~!");
-
                 wantCal = Integer.parseInt(wantCalorie.getText().toString());
-                System.out.println(wantCal);
-
                 wantCalorie.setText(wantCal+"");
                 progressBarUpdate();
 

@@ -15,10 +15,9 @@
         android:gravity="center"
         android:textSize="24dp"
         android:layout_marginTop="30dp"
-
         android:text="식단을 입력할 날짜를 선택해 주세요.">
-
     </TextView>
+
     <CalendarView
         android:id="@+id/calendarView"
         android:layout_width="match_parent"

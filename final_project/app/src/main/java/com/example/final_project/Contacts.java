@@ -129,7 +129,6 @@ public class Contacts extends Activity {
     @SuppressLint("Range")
     private void getContacts() {
         //TODO get contacts code here
-        //Toast.makeText(this, "Get contacts ....", Toast.LENGTH_LONG).show();
         information_list = new ArrayList<information>();
         urllist = new ArrayList<Uri>();
         ContentResolver cr = getContentResolver();
