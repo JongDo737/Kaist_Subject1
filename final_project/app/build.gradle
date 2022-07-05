@@ -47,5 +47,8 @@ dependencies {
 
     // JSON데이터 사용
     implementation 'org.jsoup:jsoup:1.11.3'
+    
+    //gif 사용
+    implementation 'com.github.bumptech.glide:glide:3.7.0'
 
 }
