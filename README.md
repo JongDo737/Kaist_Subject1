@@ -142,7 +142,7 @@ public class information {
 
 ## TAB 2 - 나만의 갤러리 (instagram)
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/ac85eadd-ab47-4dad-bca9-a9da68fd7c68/Untitled.png)
+![image](https://user-images.githubusercontent.com/92903481/177322473-5d440569-8ad2-445b-9bbb-043427626a0f.png)
 
 ### Major features
 
