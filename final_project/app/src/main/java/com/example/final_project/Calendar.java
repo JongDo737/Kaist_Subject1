@@ -90,10 +90,6 @@ public class Calendar extends AppCompatActivity implements Serializable{
                 if(foodMapper.containsKey(selectDate)){
                     System.out.println("데이터가 있네요 !!!!!!!! ");
                     // 데이터 전달달
-                    System.out.println(selectDate);
-                    for(int j=0; j<foodMapper.get(selectDate).size();j++){
-                        System.out.println(foodMapper.get(selectDate).get(j).getName());
-                    }
                    intent.putExtra("foodListByDate",foodMapper.get(selectDate));
 
                 }else{

@@ -13,6 +13,7 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.GridView;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -27,7 +28,7 @@ public class AndroidGridLayoutActivity extends Activity implements Serializable 
 
     public ArrayList<GalleryDto> galleryList = new ArrayList<>();
 
-    Button button;
+    ImageButton button;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -36,7 +37,7 @@ public class AndroidGridLayoutActivity extends Activity implements Serializable 
 
 
         // gallery Open Btn
-        button = (Button)findViewById(R.id.button);
+        button = (ImageButton)findViewById(R.id.button);
 
         // 갤러리 오픈 버튼 클릭
         button.setOnClickListener(new View.OnClickListener() {
