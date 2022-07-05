@@ -5,31 +5,28 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.widget.EditText;
 import android.widget.ImageView;
 
 import java.io.FileInputStream;
+import java.io.Serializable;
 
-public class FullImageActivity extends Activity {
-
+public class FullImageActivity extends Activity implements Serializable {
+    EditText textView3;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.full_image);
+        textView3 = findViewById(R.id.textView3);
+        textView3.setBackground(null);
 
-        // get intent data
-
-        /*Intent i = getIntent();
-        */
-
-        // Selected image
-        /*Bitmap img = (Bitmap) i.getExtras().get("IMG");
-        */
-        //ImageAdapter imageAdapter = new ImageAdapter(this);
-
-        /*ImageView imageView = (ImageView) findViewById(R.id.full_image_view);
-        */
-        //imageView.setImageResource(imageAdapter.mThumbIds[position]);
+        GalleryDto galleryDto = new GalleryDto();
         Intent intent = getIntent();
+        galleryDto = (GalleryDto)intent.getSerializableExtra("galleryDto");
+        String positionStr = intent.getStringExtra("position");
+
+
+
         ImageView imageView = (ImageView) findViewById(R.id.full_image_view);
         Bitmap bmp = null;
         String filename = intent.getStringExtra("image");
@@ -41,43 +38,7 @@ public class FullImageActivity extends Activity {
             e.printStackTrace();
         }
         imageView.setImageBitmap(bmp);
-        /*
-        String title = intent.getStringExtra("title");
-        int position = intent.getExtras().getInt("title");
 
-        EditText imgt = (EditText)findViewById(R.id.imgTitle);
-        imgt.setText(title);
-        Button commit = (Button) findViewById(R.id.commit);
-
-        commit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent_to_grid = new Intent(getApplicationContext(), AndroidGridLayoutActivity.class);
-                intent_to_grid.putExtra("imgtitle", String.valueOf(imgt));
-                intent_to_grid.putExtra("position", position);
-                System.out.println("position전송전");
-                System.out.println(position);
-                startActivity(intent_to_grid);
-                /*
-                View parentRow = (View) view.getParent();
-                ListView listView = (ListView) parentRow.getParent();
-                String text = imgt.getText().toString();
-
-                final int position = listView.getPositionForView(parentRow);
-                galleryList.get(position).setImgTitle(text);
-
-
-            }
-        });
-        */
-
-
-        //byte[] arr = getIntent().getByteArrayExtra("image");
-        //Bitmap img = BitmapFactory.decodeByteArray(arr, 0, arr.length);
-        ////ImageView BigImage = (ImageView)findViewById(R.id.BigImage);
-        //ImageView imageView = (ImageView) findViewById(R.id.full_image_view);
-
-        /*imageView.setImageBitmap(img);*/
     }
 
 }
