@@ -385,6 +385,7 @@ startActivityForResult(intent, 0);
  ![image](https://user-images.githubusercontent.com/92903481/177327510-2b754cc9-c78b-4ab5-8be5-c8fe18a95941.png)
 
 - PieChart를 통해서 탄단지 비율 확인
+ 
  ![image](https://user-images.githubusercontent.com/92903481/177327707-2b8ca1f3-5bd6-4278-9ada-ae5f2f476537.png)
 
 - LineChart를 통한 날짜 별 영양소 변화 추이 표시
