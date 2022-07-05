@@ -2,6 +2,11 @@
 
 ![image](https://user-images.githubusercontent.com/92903481/177324695-42682d19-093c-475e-8b75-d6313ff14102.png)
 
+##개발 환경
+ - OS: Android 11(minSdk: 21, targetSdk: 30)
+ - 언어: Java
+ - IDE: Android Studio
+ - Target Device: Galaxy S10e
 ## 
 
 ## TAB 1 - 전화번호부
