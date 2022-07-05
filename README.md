@@ -2,6 +2,10 @@
 
 ![image](https://user-images.githubusercontent.com/92903481/177324695-42682d19-093c-475e-8b75-d6313ff14102.png)
 
+## 개발 팀원
+ - 카이스트 한재준
+ - 부산대 신종민
+
 ## 개발 환경
  - OS: Android 11(minSdk: 21, targetSdk: 30)
  - 언어: Java
