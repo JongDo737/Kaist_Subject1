@@ -4,7 +4,7 @@
 
 ## TAB 1 - 전화번호부
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/82e299f9-4045-4650-b1b5-d8e53d784843/Untitled.png)
+![image](https://user-images.githubusercontent.com/92903481/177322659-2b702e51-9894-4e32-8853-afa774027ab4.png)
 
 ### Major features
 
@@ -142,7 +142,8 @@ public class information {
 
 ## TAB 2 - 나만의 갤러리 (instagram)
 
-![image](https://user-images.githubusercontent.com/92903481/177322473-5d440569-8ad2-445b-9bbb-043427626a0f.png)
+![image](https://user-images.githubusercontent.com/92903481/177322567-6df37f4d-0c34-40c0-a1b5-d1e7e87dfa22.png)
+
 
 ### Major features
 
@@ -299,7 +300,7 @@ gridView.setOnItemClickListener(new OnItemClickListener() {
 
 ## TAB 3 - 식단 관리 어플리케이션
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/9bf5e988-2c98-4816-b638-aa6c14423183/Untitled.png)
+![image](https://user-images.githubusercontent.com/92903481/177322473-5d440569-8ad2-445b-9bbb-043427626a0f.png)
 
 ### Major features
 
