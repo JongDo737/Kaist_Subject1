@@ -45,7 +45,6 @@ public class Calendar extends AppCompatActivity implements Serializable{
         calendarView = (CalendarView) findViewById(R.id.calendarView); // get the reference of CalendarView
         calendarView.setDate(System.currentTimeMillis(),false,true);
         // 현재 날짜까지 표시
-        System.out.println("공공데이터 API 함수 호출 오류");
         calendarView.setMaxDate(System.currentTimeMillis());
         System.out.println(System.currentTimeMillis());
         // 현재 날짜 기준으로
