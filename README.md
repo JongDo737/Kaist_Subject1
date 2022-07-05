@@ -380,6 +380,14 @@ startActivityForResult(intent, 0);
 
    3. 식단 데이터를 통한 데이터 표현
 
-- ProgressBar를 통한 식단 진행 상황 표시
+- ProgressBar를 통한 식단 진행 상황 표시 ( 루피의 사진 변화 )
+  목표칼로리에 대한 칼로리로 루피의 표정이 변화한다.
+ ![image](https://user-images.githubusercontent.com/92903481/177327510-2b754cc9-c78b-4ab5-8be5-c8fe18a95941.png)
+
 - PieChart를 통해서 탄단지 비율 확인
+ ![image](https://user-images.githubusercontent.com/92903481/177327707-2b8ca1f3-5bd6-4278-9ada-ae5f2f476537.png)
+
 - LineChart를 통한 날짜 별 영양소 변화 추이 표시
+ ![image](https://user-images.githubusercontent.com/92903481/177327891-d464858a-b9ab-4ae2-8fc4-63787e8dc579.png)
+
+ 
