@@ -3,7 +3,9 @@ package com.example.final_project;
 import android.graphics.Bitmap;
 import android.widget.Button;
 
-public class GalleryDto {
+import java.io.Serializable;
+
+public class GalleryDto implements Serializable {
     private Bitmap img;
     String imgTitle="";
     Button commit;

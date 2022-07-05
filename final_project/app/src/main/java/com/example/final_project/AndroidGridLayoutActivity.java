@@ -14,32 +14,32 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import java.io.FileOutputStream;
 import java.io.InputStream;
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class AndroidGridLayoutActivity extends Activity {
+public class AndroidGridLayoutActivity extends Activity implements Serializable {
 
     public ImageAdapter myAdapter = new ImageAdapter(this);
 
     public ArrayList<GalleryDto> galleryList = new ArrayList<>();
 
+    Button button;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.grid_layout);
-        Intent intent = getIntent();
-        String imgtitle = "";
-        int position = -1;
-        imgtitle = intent.getStringExtra("imgtitle");
-        //position = intent.getExtras().getInt("position");
-        position = intent.getIntExtra("position", -1);
-        System.out.println("position드갑니다");
-        System.out.println(position);
-        Button button;              // gallery Open Btn
+
+
+        // gallery Open Btn
         button = (Button)findViewById(R.id.button);
-        button.setOnClickListener(new View.OnClickListener() {      // 갤러리 오픈 버튼 클릭
+
+        // 갤러리 오픈 버튼 클릭
+        button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent();
@@ -64,39 +64,29 @@ public class AndroidGridLayoutActivity extends Activity {
             public void onItemClick(AdapterView<?> parent, View v,
                                     int position, long id) {
 
-                // Sending image id to FullScreenActivity
-                //Intent i = new Intent(getApplicationContext(), FullImageActivity.class);
-
-                //Bitmap sendBitmap = galleryList.get(position).getImg();
                 Intent in1 = new Intent(getApplicationContext(), FullImageActivity.class);
-                GalleryDto obj = galleryList.get(position);
+                GalleryDto galleryDto = galleryList.get(position);
                 try {
                     //Write file
                     String filename = "bitmap.png";
                     FileOutputStream stream = openFileOutput(filename, Context.MODE_PRIVATE);
-                    Bitmap bmp = obj.getImg();
+                    Bitmap bmp = galleryDto.getImg();
                     bmp.compress(Bitmap.CompressFormat.PNG, 100, stream);
-
 
                     //Pop intent
                     in1.putExtra("image", filename);
                     //Cleanup
                     stream.close();
                     //bmp.recycle();
+
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-                in1.putExtra("title", obj.getImgTitle());
                 in1.putExtra("position", position);
-                startActivity(in1);
-                //ByteArrayOutputStream stream = new ByteArrayOutputStream();
-                //sendBitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
-                //byte[] byteArray = stream.toByteArray();
-                //i.putExtra("image",byteArray);
-
-
-                //i.putExtra("IMG", galleryList.get(position).getImg());
-                //startActivity(i);
+                in1.putExtra("text",galleryDto.getImgTitle());
+                System.out.println("전송 !!!!!!!!!!!!!!!!!!!!!!");
+                System.out.println("position : "+position);
+                startActivityForResult(in1,200);
             }
         });
     }
@@ -105,9 +95,12 @@ public class AndroidGridLayoutActivity extends Activity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         // Check which request we're responding to
         super.onActivityResult(requestCode, resultCode, data);
-        System.out.println("여기요 여기 222222");
         GalleryDto galleryDto = new GalleryDto();
+
+        // 갤러리 들어갔다가 나왔을때
         if (requestCode == 1) {
+
+            System.out.println("open 버튼 눌렀을 때 !!!!!!!!! ");
             // Make sure the request was successful
             if (resultCode == RESULT_OK) {
                 try {
@@ -116,62 +109,45 @@ public class AndroidGridLayoutActivity extends Activity {
                     Bitmap img = BitmapFactory.decodeStream(in);
                     in.close();
                     // 이미지 표시
-                    System.out.println("AAAAAAAAAAAAAAAAAAAAAAAA");
-                    System.out.println(img);
                     galleryDto.setImg(img);
                     galleryList.add(galleryDto);
-                    //myAdapter.addGalleryDto(galleryDto);
-                    //galleryList.add(galleryDto);
                     System.out.println("여기요 여기 333333");
-                    //for(int i=0; i<myAdapter.galleryList_size();i++){
-                    //    System.out.println(myAdapter.getGalleryDto(i).getImg());
-                    //}
 
-                    for(int i=0; i<galleryList.size();i++){
-                        System.out.println(galleryList.get(i).getImg());
-                    }
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
-        }
-        System.out.println("여기요 여기 4444444444444444444444444");
-        myAdapter.notifyDataSetChanged();
-        GridView gridView = (GridView) findViewById(R.id.grid_view);
+            System.out.println("여기요 여기 4444444444444444444444444");
+            myAdapter.notifyDataSetChanged();
+            GridView gridView = (GridView) findViewById(R.id.grid_view);
 
-        // Instance of ImageAdapter Class
-        gridView.setAdapter(new ImageAdapter(this));
-        System.out.println("여기요 여기 55555555555555555555555");
+            // Instance of ImageAdapter Class
+            gridView.setAdapter(new ImageAdapter(this));
+            System.out.println("여기요 여기 55555555555555555555555");
+        }
+
+        // fullImage 후
+        else if(requestCode == 200) {
+            if (resultCode == RESULT_OK) {      // 데이터 받기 성공
+                galleryDto = (GalleryDto)data.getSerializableExtra("result");
+                String positionStr = data.getStringExtra("position");
+
+
+            } else {   // RESULT_CANCEL
+
+            }
+        }
+
     }
 
     public class ImageAdapter extends BaseAdapter {
         private Context mContext;
 
-
-        /*
-        // Keep all Images in array
-        public Integer[] mThumbIds = {
-                R.drawable.pic_1, R.drawable.pic_2,
-                R.drawable.pic_3, R.drawable.pic_4,
-                R.drawable.pic_5, R.drawable.pic_6,
-                R.drawable.pic_7, R.drawable.pic_8,
-                R.drawable.pic_9, R.drawable.pic_10,
-                R.drawable.pic_11, R.drawable.pic_12,
-                R.drawable.pic_13, R.drawable.pic_14,
-                R.drawable.pic_15
-        };
-        */
         // Constructor
         public ImageAdapter(Context c){
             mContext = c;
         }
 
-        /*
-        @Override
-        public int getCount() {
-            return mThumbIds.length;
-        }
-        */
         @Override
         public int getCount() {
             System.out.println("galleryList.size()=================");
@@ -179,13 +155,6 @@ public class AndroidGridLayoutActivity extends Activity {
             return galleryList.size();
         }
 
-
-    /*
-    @Override
-    public Object getItem(int position) {
-        return mThumbIds[position];
-    }
-    */
 
         @Override
         public Object getItem(int position) {
@@ -200,20 +169,6 @@ public class AndroidGridLayoutActivity extends Activity {
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
-        /*
-        // 특정 행(position)의 데이터를 구함
-        GalleryDto item = (GalleryDto) getItem(position);
-
-        // 같은 행에 표시시킨 View는 재사용되기 때문에 첫 회만 생성
-        galleryList.get(position);
-        */
-            System.out.println("여기에요여기에요여기에요여기에요여기에요여기에요여기에요여기에요여기에요여기에요여기에요여기에요여기에요여기에요여기에요");
-        /*
-        for(int i=0; i<galleryList.size();i++){
-            System.out.println("7777777777775555555555555555555555898");
-            System.out.println(galleryList.get(i).getImg());
-        }
-         */
 
             ImageView imageView = new ImageView(mContext);
             System.out.println("11111111111111111111111");
@@ -221,8 +176,6 @@ public class AndroidGridLayoutActivity extends Activity {
                 imageView.setImageBitmap(galleryList.get(position).getImg());
             }
 
-            //imageView.setImageBitmap(galleryList.get(position).getImg());
-            //imageView.setImageResource(mThumbIds[position]);
             imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
             imageView.setLayoutParams(new GridView.LayoutParams(300, 300));
             return imageView;
