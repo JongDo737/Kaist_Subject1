@@ -36,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
         TAB3.setOnClickListener(new View.OnClickListener() {      // TAB2 버튼 클릭
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), Calendar.class);
+                Intent intent = new Intent(getApplicationContext(), RubyLoading.class);
                 startActivity(intent);
             }
         });

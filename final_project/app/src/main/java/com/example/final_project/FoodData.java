@@ -10,7 +10,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 
-public class FoodData {
+public class FoodData  {
     String result;
 
     public ArrayList<FoodDataDto> getAPIData() throws Exception {
@@ -45,7 +45,6 @@ public class FoodData {
             }
         }).start();
         Thread.sleep(1500);
-
 
         ArrayList<FoodDataDto> foodList = new ArrayList<>();
 

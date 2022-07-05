@@ -28,6 +28,7 @@ public class Calendar extends AppCompatActivity implements Serializable{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_calendar);
 
+
         // 음식 데이터 클래스 선언
         FoodData foodData = new FoodData();
 

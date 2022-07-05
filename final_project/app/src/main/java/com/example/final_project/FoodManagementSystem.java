@@ -14,6 +14,7 @@ import android.widget.AutoCompleteTextView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.ScrollView;
@@ -34,14 +35,19 @@ import java.util.ArrayList;
 public class FoodManagementSystem
         extends AppCompatActivity implements Serializable {
     PieChart pieChart;
+
     ProgressBar progressBar;
+
     TextView nowCalorie;
     TextView wantCalorie;
     TextView progressText;
+
     EditText foodName;
     EditText food_amount;
 
     ScrollView scrollView;
+
+    ImageView rupyImage;
 
     Button btnAdd;
     Button commitBtn;
@@ -64,12 +70,16 @@ public class FoodManagementSystem
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_fms);
+
+
+
         // 스크롤뷰
         scrollView = findViewById(R.id.scrollView);
         editBtn = findViewById(R.id.editBtn);
         progressBar = findViewById(R.id.progressBar);
         commitBtn = findViewById(R.id.commitBtn);
         progressText = findViewById(R.id.progressText);
+        rupyImage = findViewById(R.id.rupyImage);
         // 검색 창
         autoCompleteTextView = (AutoCompleteTextView) findViewById(R.id.autoCompleteTextView);
         // AutoCompleteTextView 에 아답터를 연결한다.
@@ -324,12 +334,16 @@ public class FoodManagementSystem
 //         색깔바꾸기
         if(colorCheck>=0 && colorCheck<50){
             progressBar.setProgressTintList(ColorStateList.valueOf(Color.BLUE));
+            rupyImage.setImageResource(R.drawable.rupy1);
         }else if(colorCheck>=50 && colorCheck<105){
             progressBar.setProgressTintList(ColorStateList.valueOf(Color.GREEN));
+            rupyImage.setImageResource(R.drawable.rupy3);
         }else if(colorCheck>=105 && colorCheck<120){
             progressBar.setProgressTintList(ColorStateList.valueOf(Color.YELLOW));
+            rupyImage.setImageResource(R.drawable.rupy);
         }else {
             progressBar.setProgressTintList(ColorStateList.valueOf(Color.RED));
+            rupyImage.setImageResource(R.drawable.rupy);
         }
 
 

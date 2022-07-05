@@ -5,6 +5,7 @@
     android:gravity="center"
     android:layout_height="match_parent">
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:background="#D0FFD5"
         android:layout_width="match_parent"
         android:gravity="center"
         android:layout_height="match_parent"
