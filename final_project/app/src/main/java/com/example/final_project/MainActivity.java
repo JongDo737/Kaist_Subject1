@@ -5,7 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
+import android.widget.ImageButton;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -14,7 +14,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Button TAB1 = (Button)findViewById(R.id.TAB1);
+        ImageButton TAB1 = (ImageButton)findViewById(R.id.TAB1);
         TAB1.setOnClickListener(new View.OnClickListener() {      // TAB1 버튼 클릭
             @Override
             public void onClick(View view) {
@@ -23,7 +23,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        Button TAB2 = (Button)findViewById(R.id.TAB2);
+        ImageButton TAB2 = (ImageButton)findViewById(R.id.TAB2);
         TAB2.setOnClickListener(new View.OnClickListener() {      // TAB2 버튼 클릭
             @Override
             public void onClick(View view) {
@@ -32,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        Button TAB3 = (Button)findViewById(R.id.TAB3);
+        ImageButton TAB3 = (ImageButton)findViewById(R.id.TAB3);
         TAB3.setOnClickListener(new View.OnClickListener() {      // TAB2 버튼 클릭
             @Override
             public void onClick(View view) {

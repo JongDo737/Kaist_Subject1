@@ -5,42 +5,113 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@color/background_color"
     tools:context=".MainActivity">
-
-    <Button
-        android:id="@+id/TAB1"
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="TAB1"
+        android:layout_marginTop="150dp"
+        android:orientation="horizontal">
+
+        <ImageButton
+            android:background="@android:color/transparent"
+            android:id="@+id/TAB1"
+            android:layout_width="0dp"
+            android:layout_height="160dp"
+            android:layout_weight="1"
+            android:src="@drawable/tab1"
+            android:textAlignment="center"
+            android:adjustViewBounds="true"
+            android:scaleType="fitCenter"
+            tools:layout_editor_absoluteX="123dp"
+            tools:layout_editor_absoluteY="91dp"
+            android:layout_marginLeft="15dp" />
+
+        <ImageButton
+            android:id="@+id/TAB2"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="160dp"
+            android:adjustViewBounds="true"
+            android:scaleType="fitCenter"
+            android:src="@drawable/tab2"
+            android:textAlignment="center"
+            tools:layout_editor_absoluteX="91dp"
+            tools:layout_editor_absoluteY="158dp"
+            android:background="@android:color/transparent"
+            android:layout_marginLeft="20dp" />
+
+        <ImageButton
+            android:id="@+id/TAB3"
+            android:background="@android:color/transparent"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="160dp"
+            android:adjustViewBounds="true"
+            android:scaleType="fitCenter"
+            android:src="@drawable/tab3"
+            android:textAlignment="center"
+            tools:layout_editor_absoluteX="123dp"
+            tools:layout_editor_absoluteY="91dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="15dp" />
+
+    </LinearLayout>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="연락처"
+            android:layout_weight="1"
+            android:layout_marginLeft="15dp"
+            android:gravity="center"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:textSize="20sp" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="갤러리"
+            android:layout_weight="1"
+            android:layout_marginLeft="20dp"
+            android:gravity="center"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:textSize="20sp" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="식단관리"
+            android:textStyle="bold"
+            android:layout_weight="1"
+            android:layout_marginLeft="20dp"
+            android:textColor="@color/black"
+            android:layout_marginRight="15dp"
+            android:gravity="center"
+            android:textSize="20sp" />
+    </LinearLayout>
+    <ImageView
+        android:id="@+id/bottom"
+        android:layout_marginTop="100dp"
+        android:layout_marginBottom="50dp"
+        android:background="@android:color/transparent"
+        android:layout_width="match_parent"
+        android:layout_weight="1"
+        android:layout_height="160dp"
+        android:adjustViewBounds="true"
+        android:scaleType="fitCenter"
+        android:src="@drawable/bottom"
         android:textAlignment="center"
         tools:layout_editor_absoluteX="123dp"
-        tools:layout_editor_absoluteY="91dp" />
-
-    <Button
-        android:id="@+id/TAB2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="TAB2"
-        android:textAlignment="center"
-        tools:layout_editor_absoluteX="91dp"
-        tools:layout_editor_absoluteY="158dp" />
-    <Button
-        android:id="@+id/TAB3"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="TAB3"
-        android:textAlignment="center"
-        tools:layout_editor_absoluteX="123dp"
-        tools:layout_editor_absoluteY="91dp" />
-    <!--
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-    -->
-
+        tools:layout_editor_absoluteY="91dp"/>
 </LinearLayout>
